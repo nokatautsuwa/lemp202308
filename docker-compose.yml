@@ -1,0 +1,76 @@
+# versionの無記載やlatestは日時経過で違うversionがインストールされるのでしないほうがいい
+
+# docker-composeのversion
+version: "3.9"
+
+services:
+  # アプリケーションcontainer
+  app:
+    image: res_app:laravel10.18.0
+    container_name: laravel
+    build:
+      context: . # docker-compose.ymlがある階層をルートディレクトリに指定する
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./src:/data # ローカルのdataディレクトリとcontainerのdataディレクトリを同期
+    depends_on: # db containerでSQLコマンドのテスト実行が完了してから起動されるようにする
+      db:
+        condition: service_healthy
+
+  # Webサーバーcontainer
+  web:
+    image: res_web:nginx1.24.0
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports: # local接続ポート番号:container接続ポート番号を指定する
+      - ${WEB_PORT}:80
+    volumes:
+      - ./src:/data
+    depends_on: # appの次に起動されるようにする
+      - app
+
+  # DB container
+  db:
+    image: res_db:mysql8.0.30
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    environment: # MySQLの環境設定
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # rootユーザーのパスワード(必須)
+      MYSQL_USER: ${MYSQL_USER} # root以外のユーザー名
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD} # root以外のユーザーパスワード
+      MYSQL_DATABASE: ${MYSQL_DB_NAME} # 作成するDB名
+      TZ: ${TZ} # タイムゾーン(東京)
+    volumes:
+      - ./docker/db:/var/lib/mysql
+    ports:
+      - ${DB_PORT}:3306
+    healthcheck: # テストコマンド実行して接続確認
+      test: mysqladmin ping -h 127.0.0.1 -u${MYSQL_USER} -p${MYSQL_PASSWORD}
+
+  # MySQL GUI管理ツールcontainer
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:5.2.1
+    environment:
+      PMA_ARBITRARY: 1 # 任意のサーバーへの接続を許可
+      PMA_HOST: db # dbのサービス名(ホスト名)を指定
+      PMA_USER: ${MYSQL_USER} # phpmyadminにデフォルトでログインするdbのユーザー名
+      PMA_PASSWORD: ${MYSQL_PASSWORD} # dbのユーザーパスワード
+    ports:
+      - ${PMA_PORT}:80
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
+    depends_on:
+      - app
+
+# DBのユーザー名/パスワードは.envで管理
+
+# Dockerネットワーク
+networks:
+  # コンテナ同士はホストから独立したネットワークで通信して"resnet"という名前をつける
+  appnet:
+    driver: resnet
