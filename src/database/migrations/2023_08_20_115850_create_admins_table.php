@@ -11,26 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             // Primary Key
             $table->bigIncrements('id')->autoIncrement();
-            // アカウント情報登録(1P)
+            // アカウント情報登録
             // -------------------------------------
             // アカウント名: マイページに表示される名前
             $table->string('name');
-            // [必須]アカウントID: 半角英数字のみ/同じ文字列は登録できないようにする
-            $table->string('account_id');
             // 登録メールアドレス: 同じメールアドレスは登録できないようにする
             $table->string('email');
             // [必須]パスワード: 英数字8文字以上
             $table->string('password');
             // -------------------------------------
-            // その他: フォームには入れず登録時に自動で反映される(後でマイページで編集できるようにする)
-            // -------------------------------------
-            // 自己紹介文
-            $table->string('bio')->default('よろしくお願いいたします。');
             // プロフィールアイコン: 画像のファイルパスのみ
             $table->string('image')->default('icon_default.svg');
+            // Userの管理権限の付与(0: 権限無し / 1: 権限あり)
+            $table->integer('user_authority')->default(0);
+            // 編集権限フラグ(0: 権限無し / 1: 権限あり)
+            // 0: 自分のプロフィールの編集/削除
+            // 1: 他adminユーザーの編集/削除
+            $table->integer('admin_authority')->default(0);
             // -------------------------------------
             // アカウント登録日時: timestampは2038年問題を回避できないのでdatetime
             $table->datetime('created_at')->useCurrent();
@@ -45,6 +45,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('admins');
     }
 };
