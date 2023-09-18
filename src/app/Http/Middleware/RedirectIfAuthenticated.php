@@ -20,6 +20,13 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
+
+            // RouteServiceProvider.php
+            if (Auth::guard('user')->check()) {
+                return redirect(RouteServiceProvider::USER_HOME);
+            }
+
+            // デフォルト設定(↑を使うのでこっちに到達することは無い)
             if (Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::HOME);
             }
