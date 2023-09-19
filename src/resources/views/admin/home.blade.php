@@ -13,17 +13,22 @@
 
 @endif
 
-    <p>Admin Home.</p>
-    @foreach ($users as $user)
-        <p>
-            {{ $user->id }}: {{ $user->name }} ({{ '@' }}{{ $user->account_id }})
-        </p>
-    @endforeach
-    <form method="POST" action="{{ route('admin.logout') }}">
-        @csrf
-        <button type="submit">
-            ログアウト
-        </button>
-    </form>
+    <article>
+
+        <section>
+
+            <p>Admin Home.</p>
+
+        <section>
+
+        <section>
+
+            @foreach ($users as $user)
+                <p>{{ $user->id }}: {{ $user->name }} ({{ '@' }}{{ $user->account_id }})</p>
+            @endforeach
+
+        <section>
+
+    </article>
 
 @endsection

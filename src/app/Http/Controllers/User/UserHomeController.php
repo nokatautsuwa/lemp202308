@@ -27,6 +27,6 @@ class UserHomeController extends Controller
         // セッションIDを再生成(セッションハイジャック対策)
         $request->session()->regenerateToken();
         // * ログアウト時にはこれらの処理を行うことが推奨されている
-        return redirect()->route('home')->with('success', '* ログアウトしました');
+        return redirect()->route('login')->with('success', '* ログアウトしました');
     }
 }
