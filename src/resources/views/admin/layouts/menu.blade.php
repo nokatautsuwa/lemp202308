@@ -9,7 +9,13 @@
       {{ Auth::guard('admin')->user()->name }}
     </a>
   </li>
-  <li class='menu-list-auth-end'>
+  <li>
+      <a href="{{ route('admin.profile.settings', ['id' => Auth::guard('admin')->user()->id]) }}">
+          <img src="{{ asset('images/close.svg') }}" alt="settings">
+          設定
+      </a>
+  </li>
+  <li>
     <form method="POST" action="{{ route('admin.logout') }}">
       @csrf
       <button type="submit">
@@ -17,11 +23,5 @@
         ログアウト
       </button>
     </form>
-  </li>
-  <li class='menu-list-entrance'>
-    <a href="{{ route('home') }}">
-      <img src="{{ asset('images/close.svg') }}" alt="entrance">
-      エントランス
-    </a>
   </li>
 </ul>

@@ -3,29 +3,25 @@
 @section('title', 'ログイン')
 
 @section('content')
-    <section class='auth'>
+
+    <article>
 
         @if(session('success'))
             <!--処理が成功してリダイレクトしたときに表示する-->
-            <p class="alert-success">
-                {{ session('success') }}
-            </p>
+            <p class="alert-success">{{ session('success') }}</p>
         @endif
 
-        <p class='title'>ログイン</p>
+        <section>
 
-        <form method="POST" action="{{ route('admin.login.attempt') }}">
-            <!------------------------------------------------->
-            <!--CSRFトークン-->
-            @csrf
+            <p class='title'>ログイン</p>
 
-            <!--メールアドレス or ユーザー名(必須/既存レコードと同じものは不可)-->
-            <p>
-                <label for="account">
-                    メールアドレス or 名前
-                </label>
-            </p>
-            <div class="input-form">
+            <form method="POST" action="{{ route('admin.login.attempt') }}">
+                <!------------------------------------------------->
+                <!--CSRFトークン-->
+                @csrf
+
+                <!--メールアドレス or ユーザー名(必須/既存レコードと同じものは不可)-->
+                <label for="account">メールアドレス or 名前</label>
                 <input type="text" name="account">
                 <!--エラーハンドリング-->
                 @if ($errors->has('account'))
@@ -33,11 +29,9 @@
                         {{ $errors->first('account') }}
                     </p>
                 @endif
-            </div>
 
-            <!--パスワード(必須/伏字)-->
-            <p><label for="password">パスワード</label></p>
-            <div class="input-form">
+                <!--パスワード(必須/伏字)-->
+                <label for="password">パスワード</label>
                 <input type="password" name="password">
                 <!--エラーハンドリング-->
                 @if ($errors->has('password'))
@@ -51,15 +45,17 @@
                         {{ session('error') }}
                     </p>
                 @endif
-            </div>
 
-            <div class='submit'>
-                <button type="submit">ログイン</button>
-                <button><a href="{{ route('admin.register') }}">未登録の方</a></button>
-            </div>
-            <!------------------------------------------------->
+                <div class='submit'>
+                    <button type="submit">ログイン</button>
+                    <a href="{{ route('admin.register') }}">未登録の方</a>
+                </div>
+                <!------------------------------------------------->
 
-        </form>
+            </form>
 
-    </section>
+        </section>
+
+    </article>
+
 @endsection

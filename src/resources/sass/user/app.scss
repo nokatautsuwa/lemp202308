@@ -1,0 +1,217 @@
+// カスタムプロパティ
+:root {
+  --color-black: #111111;
+  --color-black-gray: #444444;
+  --color-white-gray: #CCCCCC;
+  --color-white: #EEEEEE;
+  --font-space: 1px;
+  --font-line: 1.5;
+  --font-s: 12px;
+  --font-m: 14px;
+  --font-l: 16px;
+}
+
+
+
+// スクロールバーは非表示
+::-webkit-scrollbar {
+  /*display: none;*/
+}
+
+
+
+// ページ全体
+// ------------------------------------------
+body {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  font-size: var(--font-m);
+  letter-spacing: var(--font-space);
+  line-height: var(--font-line);
+  margin: 0;
+
+  // bodyで一括設定できないタグの設定
+  a,
+  li,
+  button {
+    color: var(--color-white);
+    font-size: var(--font-m);
+    letter-spacing: var(--font-space);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  li {
+    list-style: none;
+  }
+
+  input {
+    font-size: 16px;
+    letter-spacing: var(--font-space);
+    border-radius: 50px;
+    padding: 10px 20px;
+    margin: 5px 0;
+  }
+
+  button,
+  button[type="submit"] {
+    display: block;
+    color: var(--color-black);
+    background-color: var(--color-white);
+    font-size: var(--font-s);
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 0 5px;
+
+    a {
+      color: var(--color-black);
+      font-size: var(--font-s);
+    }
+  }
+
+  // ヘッダー
+  header {
+    z-index: 990;
+    position: fixed;
+    width: 100%;
+    height: 35px;
+    background-color: #333333;
+
+    nav {
+      z-index: 990;
+      
+      // グローバルナビ
+      ul {
+        position: fixed;
+        display: flex;
+        top: 5px;
+        right: 50px;
+
+        li {
+          margin: 0 5px;
+
+          img {
+            height: 25px;
+            width: auto;
+            border-radius: 15px;
+            vertical-align: middle;
+          }
+        }
+
+        li:last-child {
+          margin: 0 0 0 5px;
+        }
+      }
+
+      // アカウントナビ
+      div {
+
+        div {
+          // アカウントのアイコン
+          position: fixed;
+          top: 5px;
+          right: 10px;
+          cursor: pointer;
+
+          img {
+            height: 25px;
+            width: auto;
+            vertical-align: middle;
+            border-radius: 15px;
+          }
+        }
+
+        // アカウントmenuリスト
+        ul.menu-list {
+          position: fixed;
+          top: 40px;
+          right: 10px;
+          padding: 5px 0;
+          background-color: #FFFFFF;
+          border-radius: 5px 5px 5px 10px;
+
+          li {
+            border-radius: 15px;
+            margin: 0;
+
+            a,
+            button {
+              display: block;
+              width: 100%;
+              color: var(--color-black);
+              font-size: var(--font-s);
+              margin: 0;
+              padding: 10px 20px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              background: transparent;
+            }
+
+            img {
+              width: 15px;
+              height: auto;
+              border-radius: 14px;
+              margin-right: 5px;
+              vertical-align: -2px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // メイン
+  main {
+    display: grid;
+    place-items: start center;
+    overflow-x: hidden;
+
+    article {
+      width: 90%;
+      margin-top: 50px;
+
+      // sessionメッセージ
+      .alert-success {
+        font-size: var(--font-s);
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      section {
+
+        p {
+
+        }
+      }
+    }
+  }
+}
+// ------------------------------------------
+
+
+
+// JSによる表示/非表示切替
+// ------------------------------------------
+.hidden {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+// ------------------------------------------
+
+
+
+// footer
+// ------------------------------------------
+footer {
+  font-size: var(--font-s);
+  display: grid;
+  place-items: start center;
+  margin-bottom: 20px;
+}
+// ------------------------------------------

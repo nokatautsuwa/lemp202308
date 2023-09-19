@@ -12,7 +12,12 @@
         <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
 
         <!-- Reactコンポーネント/SCSS読み込み/タイトル -->
-
+        @viteReactRefresh
+        @vite(['resources/sass/user/app.scss'])
+        @if (strpos(url()->current(), 'login') !== false || strpos(url()->current(), 'register') !== false)
+        <!-- URLに'login''register'が含まれる場合のみ(ログイン/新規登録フォーム) -->
+            @vite(['resources/sass/user/auth.scss'])
+        @endif
 
         <title>RES | @yield('title')</title>
 
@@ -21,10 +26,22 @@
 
     <body>
 
-        <!--ヘッダー-->
-        <header>
+        @if (strpos(url()->current(), 'login') === false && strpos(url()->current(), 'register') === false)
+        <!-- URLに'login''register'どちらも含まれない場合のみ -->
 
-        </header>
+            <!--ヘッダー-->
+            <header>
+                <!-- グローバルナビ -->
+                <nav>
+
+                    <div>
+                        @include('user.layouts.menu')
+                    </div>
+
+                </nav>
+            </header>
+
+        @endif
 
         <!--メイン-->
         <main>
@@ -34,9 +51,12 @@
     </body>
 
 
+    <script src="{{ asset('js/script.js') }}"></script>
+
+
     <!--フッター-->
     <footer>
-        footer
+        chat service RES All rights reserved.
     </footer>
 
 
