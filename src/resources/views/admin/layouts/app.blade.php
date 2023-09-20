@@ -11,13 +11,14 @@
         <!-- CDNのreset.css(ress.css)URLを入力-->
         <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
 
-        <!-- Reactコンポーネント/SCSS読み込み/タイトル -->
+        <!-- Reactコンポーネント/SCSS読み込み -->
+        <!-------------------------------------------->
         @viteReactRefresh
+        <!-- ページのベースになるコンポーネント -->
         @vite(['resources/sass/admin/app.scss'])
-        @if (strpos(url()->current(), 'login') !== false || strpos(url()->current(), 'register') !== false)
-        <!-- URLに'login''register'が含まれる場合のみ(ログイン/新規登録フォーム) -->
-            @vite(['resources/sass/admin/auth.scss'])
-        @endif
+        <!-- 各ページに合わせたコンポーネントを追加で取得する -->
+        @yield('component')
+        <!-------------------------------------------->
 
         
 

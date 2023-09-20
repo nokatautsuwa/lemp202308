@@ -1,0 +1,80 @@
+// メイン部分
+main {
+
+  article {
+
+    section {
+
+      ul {
+        display: flex;
+        margin-bottom: 30px;
+
+        li {
+          margin: auto 0;
+          font-weight: bold;
+
+          .user-name {
+            font-size: var(--font-l);
+          }
+          
+          img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            vertical-align: middle;
+          }
+        }
+
+        li:last-child {
+          margin-left: 15px;
+        }
+      }
+
+      .bio {
+        margin-bottom: 15px;
+      }
+
+      .date {
+        margin-bottom: 10px;
+
+        p {
+          font-size: 10px;
+          font-weight: bold;
+          color: #AAAAAA;
+          margin: 2px 0;
+
+          span {
+            display: inline-block;
+            width: 60px;
+          }
+
+          span:last-child {
+            width: 120px;
+          }
+        }
+
+
+      }
+
+      .follow {
+        display: flex;
+        font-size: var(--font-s);
+        color: #AAAAAA;
+
+        p {
+          margin-right: 20px;
+
+          span {
+            color: var(--color-white);
+            font-size: var(--font-m);
+            font-weight: bold;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 編集ボタン押下によるウィンドウ表示制御
