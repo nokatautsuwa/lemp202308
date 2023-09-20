@@ -1,5 +1,9 @@
 @extends('user.layouts.app')
 
+@section('component')
+    @vite(['resources/sass/user/auth.scss'])
+@endsection
+
 @section('title', '新規登録')
 
 @section('content')

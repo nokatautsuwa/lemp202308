@@ -81,82 +81,56 @@ body {
 
     nav {
       z-index: 990;
-      
-      // グローバルナビ
-      ul {
-        position: fixed;
-        display: flex;
-        top: 5px;
-        right: 50px;
-
-        li {
-          margin: 0 5px;
-
-          img {
-            height: 25px;
-            width: auto;
-            border-radius: 15px;
-            vertical-align: middle;
-          }
-        }
-
-        li:last-child {
-          margin: 0 0 0 5px;
-        }
-      }
 
       // アカウントナビ
       div {
+        // アカウントのアイコン
+        position: fixed;
+        top: 5px;
+        right: 10px;
+        cursor: pointer;
 
-        div {
-          // アカウントのアイコン
-          position: fixed;
-          top: 5px;
-          right: 10px;
-          cursor: pointer;
+        img {
+          height: 25px;
+          width: auto;
+          vertical-align: middle;
+          border-radius: 15px;
+        }
+      }
+
+      // アカウントmenuリスト
+      ul.menu-list {
+        position: fixed;
+        top: 40px;
+        right: 10px;
+        padding: 5px 0;
+        background-color: #FFFFFF;
+        border-radius: 5px 5px 5px 10px;
+
+        li {
+          border-radius: 15px;
+          margin: 0;
+
+          a,
+          button {
+            display: block;
+            width: 100%;
+            color: var(--color-black);
+            font-size: var(--font-s);
+            margin: 0;
+            padding: 10px 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background: transparent;
+          }
 
           img {
-            height: 25px;
-            width: auto;
-            vertical-align: middle;
-            border-radius: 15px;
-          }
-        }
-
-        // アカウントmenuリスト
-        ul.menu-list {
-          position: fixed;
-          top: 40px;
-          right: 10px;
-          padding: 5px 0;
-          background-color: #FFFFFF;
-          border-radius: 5px 5px 5px 10px;
-
-          li {
-            border-radius: 15px;
-            margin: 0;
-
-            a,
-            button {
-              display: block;
-              width: 100%;
-              color: var(--color-black);
-              font-size: var(--font-s);
-              margin: 0;
-              padding: 10px 20px;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              background: transparent;
-            }
-
-            img {
-              width: 15px;
-              height: auto;
-              border-radius: 14px;
-              margin-right: 5px;
-              vertical-align: -2px;
-            }
+            width: 15px;
+            height: auto;
+            border-radius: 14px;
+            margin-right: 5px;
+            vertical-align: -2px;
           }
         }
       }
@@ -166,12 +140,14 @@ body {
   // メイン
   main {
     display: grid;
-    place-items: start center;
+    place-items: start end;
     overflow-x: hidden;
 
     article {
-      width: 90%;
-      margin-top: 50px;
+      width: 100%;
+      padding: 35px 30px 15px 30px;
+      height: calc(100vh - 40px);
+      overflow-y: scroll;
 
       // sessionメッセージ
       .alert-success {
@@ -181,10 +157,7 @@ body {
       }
 
       section {
-
-        p {
-
-        }
+        margin-top: 25px;
       }
     }
   }
@@ -209,9 +182,13 @@ body {
 // footer
 // ------------------------------------------
 footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 35px;
+  padding-top: 5px;
   font-size: var(--font-s);
-  display: grid;
-  place-items: start center;
-  margin-bottom: 20px;
+  text-align: center;
+  
 }
 // ------------------------------------------
