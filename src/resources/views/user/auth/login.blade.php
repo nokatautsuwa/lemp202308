@@ -25,8 +25,10 @@
                 @csrf
 
                 <!--メールアドレス or アカウントID(必須/既存レコードと同じものは不可)-->
-                <label for="account">メールアドレス or アカウントID</label>
-                <input type="text" name="account">
+                <label>
+                    メールアドレス or アカウントID
+                    <input type="text" name="account">
+                </label>
                 <!--エラーハンドリング-->
                 @if ($errors->has('account'))
                     <p class="help-block">
@@ -35,8 +37,10 @@
                 @endif
 
                 <!--パスワード(必須/伏字)-->
-                <label for="password">パスワード</label>
-                <input type="password" name="password">
+                <label>
+                    パスワード
+                    <input type="password" name="password">
+                </label>
                 <!--エラーハンドリング-->
                 @if ($errors->has('password'))
                     <p class="help-block">

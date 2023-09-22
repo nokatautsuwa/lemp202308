@@ -29,24 +29,25 @@
 
     <body>
 
-        @if (strpos(url()->current(), 'login') === false && strpos(url()->current(), 'register') === false)
-        <!-- URLに'login''register'どちらも含まれない場合のみ -->
+        @if (Auth::guard('admin')->check())
+        <!-- adminでログインしている場合のみ -->
 
-            <!--ヘッダー-->
             <header>
+                <!-- ヘッダー -->
+                <p>
+                    <a href="{{ route('admin.home') }}">
+                        管理画面
+                    </a>
+                </p>
                 <!-- グローバルナビ -->
                 <nav>
-
-                    <div>
-                        @include('admin.layouts.menu')
-                    </div>
-
+                    @include('admin.layouts.menu')
                 </nav>
             </header>
 
         @endif
 
-        <!--メイン-->
+        <!-- メイン -->
         <main>
             @yield('content')
         </main>
@@ -54,7 +55,10 @@
     </body>
 
 
-    <script src="{{ asset('js/script.js') }}"></script>
+    @if (Auth::guard('admin')->check())
+    <!-- adminでログインしている場合のみ -->
+        <script src="{{ asset('js/menu.js') }}"></script>
+    @endif
 
 
 </html>

@@ -17,15 +17,33 @@
 
         <section>
 
-            <p>Admin Home.</p>
+            <p class='title'>サービス利用ユーザー一覧</p>
 
-        <section>
+            <table>
 
-        <section>
+                <!-- 項目タイトル -->
+                <tr class='table-title'>
+                    <th>c</th>
+                    <th>No.</th>
+                    <td>ユーザー名</td>
+                    <td>ユーザーID</td>
+                    <td>ステータス</td>
+                    <td>担当者</td>
+                </tr>
 
-            @foreach ($users as $user)
-                <p>{{ $user->id }}: {{ $user->name }} ({{ '@' }}{{ $user->account_id }})</p>
-            @endforeach
+                <!-- tableリスト -->
+                @foreach ($users as $user)
+                    <tr>
+                        <th>c</th>
+                        <th>{{ $user->id }}</th>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ '@' }}{{ $user->account_id }}</td>
+                        <td>{{ '@' }}{{ $user->account_id }}</td>
+                        <td>{{ '@' }}{{ $user->account_id }}</td>
+                    </tr>
+                @endforeach
+
+            </table>
 
         <section>
 

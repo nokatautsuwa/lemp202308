@@ -20,8 +20,10 @@
                 @csrf
 
                 <!--アカウント名: マイページに表示される名前-->
-                <label for="name">名前</label>
-                <input type="text" name="name">
+                <label>
+                    名前
+                    <input type="text" name="name">
+                </label>
                 <!--エラーハンドリング-->
                 @if ($errors->has('name'))
                     <p class="help-block">
@@ -30,8 +32,10 @@
                 @endif
 
                 <!--メールアドレス-->
-                <label for="email">メールアドレス</label>
-                <input type="text" name="email">
+                <label>
+                    メールアドレス
+                    <input type="text" name="email">
+                </label>
                 <!--エラーハンドリング-->
                 @if ($errors->has('email'))
                     <p class="help-block">
@@ -40,8 +44,10 @@
                 @endif
 
                 <!--パスワード: 伏字-->
-                <label for="password">パスワード</label>
-                <input type="password" name="password">
+                <label>
+                    パスワード
+                    <input type="password" name="password">
+                </label>
                 <!--エラーハンドリング-->
                 @if ($errors->has('password'))
                     <p class="help-block">
@@ -50,8 +56,10 @@
                 @endif
 
                 <!--パスワード: 伏字-->
-                <label for="password-confirm">パスワード確認</label>
-                <input type="password" name="password-confirm">
+                <label>
+                    パスワード確認
+                    <input type="password" name="password-confirm">
+                </label>
                 <!--エラーハンドリング-->
                 @if ($errors->has('password-confirm'))
                     <p class="help-block">

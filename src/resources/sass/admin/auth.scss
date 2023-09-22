@@ -11,16 +11,10 @@ html {
 // ページ全体
 // ------------------------------------------
 body {
-  input {
-    color: var(--color-black);
-    background-color: #FFFFFF;
-    width: 100%;
-  }
 
     // メイン
     main {
       height: 100vh;
-      display: grid;
       place-items: center;
 
       article {
@@ -33,6 +27,7 @@ body {
         border: 1px solid var(--color-white-gray);
 
         section {
+
           .title {
             font-size: var(--font-m);
             margin-bottom: 15px;
@@ -40,46 +35,12 @@ body {
             border-left: 2px solid var(--color-white-gray);
           }
 
-          label {
-            font-size: var(--font-s);
-          }
-
-          .help-block {
-            color: #cc0000;
-            font-size: var(--font-s);
-            font-weight: bold;
-          }
-
-          .check {
-            display: grid;
-            place-items: center;
-            margin-top: 10px;
-          }
-
-          .checkbox {
-            width: initial;
-            text-align: center;
-          }
-
           .submit {
-            display: flex;
             justify-content: center;
-            margin-top: 20px;
 
             button,
             a {
-                display: inline-block;
-                margin: 0 10px;
-            }
-
-            a {
-              display: block;
-              color: var(--color-white);
-              background-color: var(--color-black);
-              font-size: var(--font-s);
-              border-radius: 20px;
-              padding: 10px 20px;
-              margin: 0 5px;
+                margin: 0 5px;
             }
           }
         }

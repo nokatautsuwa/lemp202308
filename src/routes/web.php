@@ -160,8 +160,8 @@ Route::namespace('App\Http\Controllers\Admin')
 
                 // 各種設定
                 Route::put('{id}/settings', 'AdminProfileController@updateProfile')->name('settings');
-                // 更新
-                Route::put('{id}/update', 'AdminProfileController@updateProfile')->name('update');
+                // 申請
+                Route::get('{id}/request', 'AdminProfileController@request')->name('request');
                 // アカウント削除: bladeから連想配列パラメータ(key: idに対応するvalue値(adminsテーブルのid))を受け取る
                 Route::delete('{id}/delete', 'AdminProfileController@delete')->name('delete');
 

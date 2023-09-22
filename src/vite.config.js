@@ -19,6 +19,7 @@ export default defineConfig({
                 "resources/sass/admin/app.scss",
                 "resources/sass/admin/auth.scss",
                 "resources/sass/admin/profile.scss",
+                "resources/sass/admin/request.scss",
             ],
             refresh: true,
         }),

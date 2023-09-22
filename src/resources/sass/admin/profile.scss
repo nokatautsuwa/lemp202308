@@ -2,20 +2,26 @@
 main {
 
   article {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 
     section {
+      margin: 0 10px;
+    }
 
-      ul {
+    .left {
+      place-items: start;
+      width: 20%;
+      min-width: 320px;
+
+      .account {
         display: flex;
-        margin-bottom: 30px;
 
         li {
           margin: auto 0;
           font-weight: bold;
-
-          .user-name {
-            font-size: var(--font-l);
-          }
           
           img {
             width: 50px;
@@ -23,30 +29,22 @@ main {
             border-radius: 50%;
             object-fit: cover;
             vertical-align: middle;
+            margin-right: 15px;
           }
         }
-
-        li:last-child {
-          margin-left: 15px;
-        }
       }
 
-      .bio {
-        margin-bottom: 15px;
-      }
+      .place {
+        display: block;
 
-      .date {
-        margin-bottom: 10px;
-
-        p {
+        li {
           font-size: 10px;
           font-weight: bold;
           color: #AAAAAA;
-          margin: 2px 0;
 
           span {
             display: inline-block;
-            width: 60px;
+            width: 80px;
           }
 
           span:last-child {
@@ -54,27 +52,25 @@ main {
           }
         }
 
-
-      }
-
-      .follow {
-        display: flex;
-        font-size: var(--font-s);
-        color: #AAAAAA;
-
-        p {
-          margin-right: 20px;
-
-          span {
-            color: var(--color-white);
-            font-size: var(--font-m);
-            font-weight: bold;
-            margin-right: 5px;
-          }
+        li:first-child {
+          color: var(--color-black);
+          font-size: var(--font-s);
+          margin-bottom: 5px;
         }
       }
+
+      ul {
+        margin: 10px 0;
+      }
+    }
+
+    .right {
+      display: block;
+      width: 50%;
+      min-width: 320px;
+      padding: 15px;
+      background-color: #FFFFFF;
+      border-radius: 10px;
     }
   }
 }
-
-// 編集ボタン押下によるウィンドウ表示制御

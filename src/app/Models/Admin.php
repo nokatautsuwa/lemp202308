@@ -22,10 +22,21 @@ class Admin extends Authenticatable
         'image',
         'user_authority',
         'admin_authority',
+        'updated_at',
     ];
     // JSONに含まれなくなる
     protected $hidden = [
+        'name',
         'email',
         'password',
+    ];
+    protected $guarded = [
+        'created_at',
+    ];
+
+    // 日付のフォーマットを変えるformat関数を使えるようにする
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 }
