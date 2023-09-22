@@ -76,87 +76,71 @@ body {
     z-index: 990;
     position: fixed;
     width: 100%;
-    height: 35px;
-    background-color: #BBBBBB;
+
+    p {
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+      height: 35px;
+      background-color: var(--color-black);
+
+      a {
+        color: var(--color-white);
+      }
+    }
+
 
     nav {
       z-index: 990;
-      
-      // グローバルナビ
-      ul {
+
+      // アカウントのアイコン
+      div {
         position: fixed;
-        display: flex;
         top: 5px;
-        right: 50px;
+        right: 10px;
+        cursor: pointer;
 
-        li {
-          margin: 0 5px;
-
-          img {
-            height: 25px;
-            width: auto;
-            border-radius: 15px;
-            vertical-align: middle;
-          }
-        }
-
-        li:last-child {
-          margin: 0 0 0 5px;
+        img {
+          height: 25px;
+          width: auto;
+          vertical-align: middle;
+          border-radius: 15px;
         }
       }
 
-      // アカウントナビ
-      div {
+      // menu
+      ul.menu-list {
+        position: fixed;
+        top: 40px;
+        right: 10px;
+        padding: 5px 0;
+        background-color: #FFFFFF;
+        border-radius: 5px 5px 5px 10px;
 
-        div {
-          // アカウントのアイコン
-          position: fixed;
-          top: 5px;
-          right: 10px;
-          cursor: pointer;
+        li {
+          border-radius: 15px;
+          margin: 0;
+
+          a,
+          button {
+            display: block;
+            width: 100%;
+            color: var(--color-black);
+            font-size: var(--font-s);
+            margin: 0;
+            padding: 10px 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background: transparent;
+          }
 
           img {
-            height: 25px;
-            width: auto;
-            vertical-align: middle;
-            border-radius: 15px;
-          }
-        }
-
-        // アカウントmenuリスト
-        ul.menu-list {
-          position: fixed;
-          top: 40px;
-          right: 10px;
-          padding: 5px 0;
-          background-color: #FFFFFF;
-          border-radius: 5px 5px 5px 10px;
-
-          li {
-            border-radius: 15px;
-            margin: 0;
-
-            a,
-            button {
-              display: block;
-              width: 100%;
-              color: var(--color-black);
-              font-size: var(--font-s);
-              margin: 0;
-              padding: 10px 20px;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              background: transparent;
-            }
-
-            img {
-              width: 15px;
-              height: auto;
-              border-radius: 14px;
-              margin-right: 5px;
-              vertical-align: -2px;
-            }
+            width: 15px;
+            height: auto;
+            border-radius: 14px;
+            margin-right: 5px;
+            vertical-align: -2px;
           }
         }
       }
@@ -170,8 +154,7 @@ body {
     overflow-x: hidden;
 
     article {
-      width: 90%;
-      margin-top: 50px;
+      margin-top: 35px;
 
       // sessionメッセージ
       .alert-success {
@@ -181,9 +164,98 @@ body {
       }
 
       section {
+        width: 100%;
+        margin-top:20px;
 
-        p {
+        a {
+          display: inline-block;
+          color: var(--color-white);
+          background-color: var(--color-black);
+          font-size: var(--font-s);
+          border-radius: 20px;
+          padding: 10px 20px;
+        }
 
+        .title {
+          font-weight: bold;
+          border-left: 2px solid var(--color-white-gray);
+          padding-left: 10px;
+          margin-bottom: 20px;
+        }
+
+        table {
+          font-size: var(--font-s);
+          text-align: left;
+          border-collapse: collapse; /* table間の隙間を無くす*/
+
+          tr {
+
+            th,
+            td {
+              max-width: 20vw;
+              white-space: nowrap;
+              overflow-x: hidden;
+              text-overflow: ellipsis; /* 枠外のテキストを...にする */
+              border-bottom: 1px solid var(--color-white-gray);
+              padding: 5px;
+            }
+
+            td {
+              width: 200px;
+            }
+          }
+
+          .table-title {
+            font-weight: bold;
+            background-color: var(--color-white-gray);
+          }
+        }
+
+        label {
+          font-size: var(--font-s);
+        }
+
+        input {
+          color: var(--color-black);
+          background-color: #FFFFFF;
+          width: 100%;
+        }
+
+        .help-block {
+          color: #cc0000;
+          font-size: var(--font-s);
+          font-weight: bold;
+        }
+
+        .check {
+          display: grid;
+          place-items: center;
+          margin-top: 10px;
+        }
+
+        .checkbox {
+          width: initial;
+          text-align: center;
+        }
+
+        .submit {
+          display: flex;
+          margin-top: 20px;
+
+          button,
+          a {
+              display: inline-block;
+          }
+
+          a {
+            display: block;
+            color: var(--color-white);
+            background-color: var(--color-black);
+            font-size: var(--font-s);
+            border-radius: 20px;
+            padding: 10px 20px;
+            margin: 0 5px;
+          }
         }
       }
     }

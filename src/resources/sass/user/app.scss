@@ -98,7 +98,7 @@ body {
         }
       }
 
-      // アカウントmenuリスト
+      // menu
       ul.menu-list {
         position: fixed;
         top: 40px;
@@ -142,12 +142,12 @@ body {
     display: grid;
     place-items: start end;
     overflow-x: hidden;
+    overflow-y: scroll;
+    height: calc(100vh - 40px);
 
     article {
       width: 100%;
       padding: 35px 30px 15px 30px;
-      height: calc(100vh - 40px);
-      overflow-y: scroll;
 
       // sessionメッセージ
       .alert-success {
@@ -158,6 +158,42 @@ body {
 
       section {
         margin-top: 25px;
+
+        .title {
+          font-size: var(--font-m);
+          margin-bottom: 15px;
+          padding-left: 10px;
+          border-left: 2px solid var(--color-white);
+        }
+
+        label {
+          font-size: var(--font-s);
+        }
+
+        .help-block {
+          color: #cc0000;
+          font-size: var(--font-s);
+          font-weight: bold;
+        }
+
+        .submit {
+          display: flex;
+          margin-top: 20px;
+
+          button,
+          a {
+              display: inline-block;
+          }
+
+          a {
+            display: block;
+            color: var(--color-black);
+            background-color: var(--color-white);
+            font-size: var(--font-s);
+            border-radius: 20px;
+            padding: 10px 20px;
+          }
+        }
       }
     }
   }
@@ -189,6 +225,5 @@ footer {
   padding-top: 5px;
   font-size: var(--font-s);
   text-align: center;
-  
 }
 // ------------------------------------------

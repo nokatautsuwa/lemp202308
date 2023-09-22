@@ -30,8 +30,10 @@
         @if (strpos(url()->current(), 'login') === false && strpos(url()->current(), 'register') === false)
         <!-- URLに'login''register'どちらも含まれない場合のみ -->
 
-            <!--ヘッダー-->
             <header>
+                <!-- ヘッダー -->
+
+
                 <!-- グローバルナビ -->
                 <nav>
                     @include('user.layouts.menu')
@@ -50,11 +52,14 @@
 
     </body>
 
+    
+    @if (Auth::guard('user')->check())
+    <!-- userでログインしている場合のみ -->
+        <script src="{{ asset('js/menu.js') }}"></script>
+    @endif
 
-    <script src="{{ asset('js/script.js') }}"></script>
 
-
-    <!--フッター-->
+    <!-- フッター -->
     <footer>
         chat service RES All rights reserved.
     </footer>

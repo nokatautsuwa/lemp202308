@@ -22,7 +22,7 @@
         <li>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit">
+                <button type="submit" onclick="return confirm('ログアウトします。よろしいですか？');">
                     <img src="{{ asset('images/close.svg') }}" alt="logout">
                     ログアウト
                 </button>

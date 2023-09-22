@@ -20,4 +20,16 @@ class AdminProfileController extends Controller
 
         return view('admin.profile', compact('admin'));
     }
+
+
+
+    // 申請
+    // Admin権限を持っている同じ配属先の上長への各種申請
+    public function request(Admin $admin, String $id)
+    {
+        // 引数$idを受け取って該当ユーザー情報を取得
+        $admin = $admin->where('id', $id)->first();
+
+        return view('admin.request', compact('admin'));
+    }
 }
