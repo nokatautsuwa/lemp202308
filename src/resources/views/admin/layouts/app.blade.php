@@ -22,7 +22,7 @@
 
         
 
-        <title>管理者画面 | @yield('title')</title>
+        <title>@yield('title') | 管理者画面</title>
 
     </head>
 
