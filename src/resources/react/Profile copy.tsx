@@ -64,6 +64,9 @@ function App() {
           <p className="user-name">{dataUser.name}</p>
           <p className="user-account-id">@{dataUser.account_id}</p>
         </li>
+        <li>
+          <button>フォロー</button>
+        </li>
       </ul>
 
       {/* 自己紹介文 */}

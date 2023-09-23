@@ -1,41 +1,40 @@
+
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Link, BrowserRouter, Routes, Route } from "react-router-dom"; // npm install react-router-dom で別途インストール
-
-// 各URLに対応するコンポーネントを入れる
-import Test from './Test';
-import Home from './Home';
-import About from './About';
+import { Link, BrowserRouter as Router, Routes, Route } from "react-router-dom"; // npm install react-router-dom で別途インストール
+import useSWR from 'swr'; // npm install swr で別途インストール
+import { format } from 'date-fns'; // 日付操作(npm install date-fnsで別途インストール)
 
 // App.tsxで全てのComponentを制御してRoutesで各SPAのURLルートを設定する
 // ex.)
 // '/'の時はHomeコンポーネントを呼び出す
 // '/about'の時はAboutコンポーネントを呼び出す
 
-function App() {
-  // api経由でログイン中ユーザー情報を取得
-  // その中からaccount_idを取得
-  // deleteにそれを入れ込む
+// 各URLに対応するコンポーネントを入れる
+import Home from './User/Home';
+import About from './User/Channel/About';
+
+
+export default function App() {
   return (
-    <BrowserRouter>
-      <h2>React</h2>
+    <>
+      <Router>
 
-      <p><Link to={`/`}>testアクセステスト</Link></p>
-      <p><Link to={`/home`}>homeアクセステスト</Link></p>
-      <p><Link to={`/about`}>aboutアクセステスト</Link></p>
+        <h1>React-User</h1>
 
-      {/* Route制御: 各URLにアクセスしたときに対応したコンポーネントを表示させる */}
-      <Routes>
-        <Route path={`/`} element={<Test />} />
-        <Route path={`/home`} element={<Home />} />
-        <Route path={`/about`} element={<About />} />
-      </Routes>
+        <p><Link to={`/home`}>Home</Link></p>
+        <p><Link to={`/channel/about`}>About</Link></p>
 
-    </BrowserRouter >
-  )
-}
+        {/* Route制御: 各URLにアクセスしたときに対応したコンポーネントを表示させる */}
+        <Routes>
+          <Route path={`/home`} element={<Home />} />
+          <Route path={`/channel/about`} element={<About />} />
+        </Routes>
 
-export default App;
+      </Router>
+    </>
+  );
+};
 
 const root = createRoot(
   document.getElementById('app') as HTMLElement
