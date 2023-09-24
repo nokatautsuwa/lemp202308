@@ -31,18 +31,26 @@ Route::namespace('App\Http\Controllers\Api')
     ->group(
         function () {
 
+            // ログイン(SPA認証)
+            Route::post('/login', 'ApiAuthController@login');
+            // ログアウト
+            Route::post('/logout', 'ApiAuthController@logout');
+
             // users
             // prefix('user'): グループ内全ルートのURLに"users/"を追加
             // -------------------------------------------------------
             Route::prefix('users')
                 ->group(function () {
-                    // ログインユーザーのデータを取得
-                    Route::middleware('auth:api')
+
+                    // auth:userでログインしている場合のみ許可
+                    Route::middleware('auth')
                         ->group(function () {
-                            Route::get('auth', 'ApiProfileController@auth');
+                            Route::get('auth', 'ApiAuthController@auth');
+
+                            // 対象のaccount_idデータを引数に格納して取得
+                            Route::get('{account_id}', 'ApiProfileController@accountId');
                         });
-                    // 対象のaccount_idデータを引数に格納して取得
-                    Route::get('{account_id}', 'ApiProfileController@accountId');
+
                 });
             // -------------------------------------------------------
 

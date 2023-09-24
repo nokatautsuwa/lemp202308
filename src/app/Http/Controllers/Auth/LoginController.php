@@ -93,7 +93,7 @@ class LoginController extends Controller
         }
 
         // $credentialsの組み合わせで認証->成功したら'/home'へリダイレクト
-        if (Auth::guard('user')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             return redirect()->route('home');
         } else {
             // LoginRequestはクリアしたが$credentialsの組み合わせに該当するレコードがないケース

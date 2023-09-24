@@ -12,7 +12,7 @@ return [
     | as required, but they're a perfect start for most applications.
     |
     */
-
+    // SanctumでSPA認証するときに使う
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',

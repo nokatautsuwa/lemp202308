@@ -26,9 +26,9 @@ class RedirectIfAuthenticated
                 return redirect(RouteServiceProvider::USER_HOME);
             }
 
-            // デフォルト設定(↑を使うのでこっちに到達することは無い)
+            // SanctumのSPA認証
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return redirect(RouteServiceProvider::USER_HOME);
             }
         }
 

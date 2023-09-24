@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import '../../sass/user/app.scss';
 
 export default function Channel() {
 
@@ -14,8 +13,8 @@ export default function Channel() {
 
   return (
     <>
-      <div className='test'>
-        <p>チャンネル名test: { channelName }</p>
+      <div>
+        <p className="text-3xl font-bold underline">チャンネル名test: { channelName }</p>
       </div>
     </>
   )

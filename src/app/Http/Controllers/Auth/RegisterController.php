@@ -98,10 +98,10 @@ class RegisterController extends Controller
         $credentials = ['account_id' => $account_id, 'password' => $password];
 
         // $credentialsの組み合わせで認証
-        if (Auth::guard('user')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             // profilesテーブルにレコードを追加する
             $profile->create([
-                'user_id' => Auth::guard('user')->user()->id,
+                'user_id' => Auth::user()->id,
             ]);
             // '/home'へリダイレクト
             return redirect()->route('home');

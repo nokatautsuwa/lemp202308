@@ -70,7 +70,7 @@ class User extends Authenticatable
     // ログインユーザー情報を取得
     public static function authUser()
     {
-        return User::where('id', Auth::guard('user')->user()->id)->first();
+        return User::where('id', Auth::user()->id)->first();
     }
 
     // Controllerから引数を受け取って対象のaccount_idユーザー情報を取得

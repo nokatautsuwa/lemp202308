@@ -24,6 +24,8 @@ class ApiProfileController extends Controller
         );
     }
 
+
+
     public function accountId(User $user, Follow $follow, String $account_id)
     {
         // 受け取った引数$account_idをUser.phpのeachUserAccountId functionに渡して
@@ -53,6 +55,16 @@ class ApiProfileController extends Controller
             )
             ->where('account_id', $account_id)
             ->first();
+        // json形式でapiを表示
+        // 単一のモデルインスタンスのため配列に変換する
+        return $this->json($users_api->toArray());
+    }
+
+    public function auth(Request $request)
+    {
+        // 'user_snc'ガードで認証されたユーザーを取得
+        $user_api = $request->user('user_snc'); 
+
         // json形式でapiを表示
         // 単一のモデルインスタンスのため配列に変換する
         return $this->json($users_api->toArray());

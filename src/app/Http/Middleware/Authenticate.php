@@ -17,11 +17,8 @@ class Authenticate extends Middleware
         if (!$request->expectsJson()) {
             $uri = $request->path();
             if (Str::startsWith($uri, ['admin/'])) {
-                // URIが'admin/~'から始まる場合
+                // URLが'admin/~'から始まる場合
                 return route('admin.login');
-            } else {
-                // URIが'admin/~'で始まらない場合(user, api)
-                return route('login');
             }
             return $request->expectsJson() ? null : route('login');
         }

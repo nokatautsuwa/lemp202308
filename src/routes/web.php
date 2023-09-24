@@ -99,9 +99,9 @@ Route::namespace('App\Http\Controllers\User')
         // -----------------------------
 
         // userでログインしている場合にのみアクセスできるページ/メソッド
-        // auth;userでuserのguardを判定する
+        // authでuserのguardを判定する
         // -----------------------------
-        Route::middleware('auth:user')
+        Route::middleware('auth')
             ->group(function () {
 
                 // アカウント設定

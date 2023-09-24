@@ -20,21 +20,50 @@
         @yield('component')
         <!-------------------------------------------->
 
-        <title>@yield('title') | RES</title>
+        <title>RES | @yield('title')</title>
 
     </head>
 
 
     <body>
-        <!-- ヘッダー -->
-        <header>
-          Header
-        </header>
 
-        <!-- ページ表示 -->
-        @yield('content')
+        @if (strpos(url()->current(), 'login') === false && strpos(url()->current(), 'register') === false)
+        <!-- URLに'login''register'どちらも含まれない場合のみ -->
+
+            <header>
+                <!-- ヘッダー -->
+                <h1>
+                    <a href="{{ route('home') }}">Header</a>
+                </h1>
+                <!-- グローバルナビ -->
+                <nav>
+                    @include('user.layouts.menu')
+                </nav>
+            </header>
+
+        @endif
+        
+        <!-- サイドバー -->
+        <aside></aside>
+
+        <!-- メイン -->
+        <main>
+            @yield('content')
+        </main>
 
     </body>
+
+    
+    @if (Auth::check())
+    <!-- userでログインしている場合のみ -->
+        <script src="{{ asset('js/menu.js') }}"></script>
+    @endif
+
+
+    <!-- フッター -->
+    <footer>
+        chat service RES All rights reserved.
+    </footer>
 
 
 </html>

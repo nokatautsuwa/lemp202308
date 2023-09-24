@@ -2,23 +2,38 @@
 import React, { useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Link, BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom"; // npm install react-router-dom で別途インストール
+import axios from 'axios'; // APIの取得(npm install axiosで別途インストール)
 import useSWR from 'swr'; // npm install swr で別途インストール
 import { format } from 'date-fns'; // 日付操作(npm install date-fnsで別途インストール)
-
-// App.tsx起点にしてRoutesで各子コンポーネントを制御する
-// ex.)
-// '/'の時はHomeコンポーネントを呼び出す
-// '/about'の時はAboutコンポーネントを呼び出す
 
 // 各URLに対応するコンポーネントを入れる
 import Home from '../User/Home';
 import Channel from '../User/Channel';
 
 export default function App() {
+
+  async function fetcher(url: string) {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  }
   
   return (
     <>
       <Router>
+
+        <main>
+          {/* Route制御: 各URLにアクセスしたときに対応したコンポーネントを表示させる */}
+          <Routes>
+            {/* ホーム(Publicチャンネル) */}
+            <Route path={`/home`} element={<Home />} />
+            {/* ホーム(Publicチャンネル) */}
+            <Route path={`/home`} element={<Home />} />
+            {/* :channelName : 子コンポーネントChannel.tsxに引数を渡す */}
+            <Route path={`/channel/:channelName`} element={<Channel />} />
+          </Routes>
+          
+        </main>
 
         <aside>
 
@@ -26,8 +41,8 @@ export default function App() {
           <div className='account'>
             <img src={`/storage/images/user/icon_default.svg`} alt='user_default' />
             <div>
-              <p>ゲストゲストゲストゲストゲストゲストゲストゲストゲストゲストゲストゲストゲスト</p>
               <p>ゲスト</p>
+              <p><a href="/login">Login</a></p>
             </div>
           </div>
 
@@ -134,17 +149,6 @@ export default function App() {
           </nav>
 
         </aside>
-
-
-        <main>
-          {/* Route制御: 各URLにアクセスしたときに対応したコンポーネントを表示させる */}
-          <Routes>
-            <Route path={`/home`} element={<Home />} />
-            {/* :channelName : 子コンポーネントChannel.tsxに引数を渡す */}
-            <Route path={`/channel/:channelName`} element={<Channel />} />
-          </Routes>
-          
-        </main>
 
       </Router>
     </>

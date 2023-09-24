@@ -14,7 +14,9 @@ return [
     | and production domains which access your API via a frontend SPA.
     |
     */
-
+    // .envに以下を追記(環境のドメインにポート番号が含まれる場合はポート番号まで必要)
+    // SANCTUM_STATEFUL_DOMAINS=使用しているドメイン
+    
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
         'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
@@ -34,7 +36,7 @@ return [
     */
 
     'guard' => ['web'],
-
+ 
     /*
     |--------------------------------------------------------------------------
     | Expiration Minutes

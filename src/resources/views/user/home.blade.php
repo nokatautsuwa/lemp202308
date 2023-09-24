@@ -3,10 +3,19 @@
 @section('title', 'ホーム')
 
 @section('component')
-    @vite(['resources/react/User/App.tsx'])
+    
 @endsection
 
 @section('content')
-    <!-- フロントエンドで実装 --> 
-    <div id='app'></div>
+
+    <article>
+
+        <section>
+
+            <p>User Home.</p>
+
+        <section>
+
+    </article>
+
 @endsection
