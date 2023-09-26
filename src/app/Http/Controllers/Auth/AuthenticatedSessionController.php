@@ -20,7 +20,9 @@ class AuthenticatedSessionController extends Controller
     public function create(): Response
     {
         return Inertia::render('Auth/Login', [
+            // パスワードリセットのリンクが有効であるかどうかを示すブール値
             'canResetPassword' => Route::has('password.request'),
+            // セッションから'status'というキーで保存されたデータを取得し、Inertiaコンポーネントに渡す
             'status' => session('status'),
         ]);
     }
@@ -30,10 +32,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // 認証(メソッドはRequest\LoginRequest.phpにある)
         $request->authenticate();
 
+        // セッションを再生成
         $request->session()->regenerate();
 
+        // ログイン後の画面へリダイレクト
+        // セッションタイムアウト時にユーザーの直前のリクエストが存在しない場合はRouteServiceProvider::HOMEへリダイレクトさせる
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -43,11 +49,11 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
+        // セッションからデータを削除してセッション自体を無効にする
         $request->session()->invalidate();
-
+        // XSRFトークンを再生成
         $request->session()->regenerateToken();
-
+        // '/'へリダイレクト
         return redirect('/');
     }
 }

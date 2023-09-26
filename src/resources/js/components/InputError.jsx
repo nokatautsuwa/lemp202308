@@ -1,7 +1,12 @@
-export default function InputError({ message, className = '', ...props }) {
+// 親コンポーネントから変数messageを受け取っている
+export default function InputError({ message }) {
+
+    // 三項演算子: messageの中身が存在する場合
     return message ? (
-        <p {...props} className={'text-sm text-red-600 ' + className}>
+        <p className={'text-sm text-red-600'}>
             {message}
         </p>
-    ) : null;
+    ) :
+        null;
+
 }
