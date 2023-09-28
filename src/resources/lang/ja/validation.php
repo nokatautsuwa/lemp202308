@@ -155,6 +155,7 @@ return [
 
     'attributes' => [
         'account_id' => 'アカウントID',
+        'email' => 'アカウント名',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
     ],

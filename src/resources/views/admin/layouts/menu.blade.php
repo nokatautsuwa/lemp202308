@@ -10,9 +10,9 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('admin.profile.settings', ['id' => Auth::guard('admin')->user()->id]) }}">
+        <a href="{{ route('admin.settings', ['id' => Auth::guard('admin')->user()->id]) }}">
             <img src="{{ asset('images/close.svg') }}" alt="settings">
-            設定
+            通知
         </a>
     </li>
     <li>

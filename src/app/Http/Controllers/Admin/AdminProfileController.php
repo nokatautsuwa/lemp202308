@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // 認証
 use App\Models\Admin; // adminsテーブル
-use Illuminate\Support\Facades\Validator; //バリデーション
 
 class AdminProfileController extends Controller
 {
@@ -15,21 +14,13 @@ class AdminProfileController extends Controller
     // 各ユーザーのプロフィール
     public function profile(Admin $admin, String $id)
     {
-        // 引数$idを受け取って該当ユーザー情報を取得
-        $admin = $admin->where('id', $id)->first();
+        // 受け取った引数$idをAdmin.phpのidUserメソッドに渡して
+        // 対象のレコードを取得
+        $admin = $admin->idUser($id);
 
-        return view('admin.profile', compact('admin'));
+        return view('admin.profile.profile', compact('admin'));
     }
 
 
 
-    // 申請
-    // Admin権限を持っている同じ配属先の上長への各種申請
-    public function request(Admin $admin, String $id)
-    {
-        // 引数$idを受け取って該当ユーザー情報を取得
-        $admin = $admin->where('id', $id)->first();
-
-        return view('admin.request', compact('admin'));
-    }
 }

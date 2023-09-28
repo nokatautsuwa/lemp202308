@@ -1,3 +1,4 @@
+// ページを離れるときに確認メッセージを表示させる
 window.addEventListener("beforeunload", function (e) {
   // ダイアログメッセージを設定
   let confirmationMessage = "このページを離れてもよろしいですか？";

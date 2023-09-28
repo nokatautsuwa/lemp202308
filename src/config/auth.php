@@ -110,6 +110,12 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+        'admins' => [                     // 追加
+            'provider' => 'admins',       // 追加
+            'table' => 'admin_password_reset_tokens', // 追加
+            'expire' => 60,               // 追加
+            'throttle' => 60,             // 追加
+        ],     
     ],
 
     /*

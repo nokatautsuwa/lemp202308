@@ -19,8 +19,7 @@ class AdminsTableSeeder extends Seeder
             // 'email_verified_at' => now(),
             'password' => bcrypt('test0000'),
             // 'remember_token' => Str::random(10),
-            'user_authority' => 1,
-            'admin_authority' => 1,
+            'system_permission' => 1,
         ]);
 
         Admin::factory()->count(4)->create(); // Faker(Factoryから)でダミーデータ4件作成

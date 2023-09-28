@@ -17,6 +17,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Display the login view.
      */
+    // userログイン画面
     public function create(): Response
     {
         return Inertia::render('Auth/Login', [
@@ -27,33 +28,67 @@ class AuthenticatedSessionController extends Controller
         ]);
     }
 
+    // adminログイン画面
+    public function adminCreate()
+    {
+        return view("admin.auth.login");
+    }
+
+
+
     /**
      * Handle an incoming authentication request.
      */
+    // userログイン認証
     public function store(LoginRequest $request): RedirectResponse
     {
         // 認証(メソッドはRequest\LoginRequest.phpにある)
         $request->authenticate();
-
         // セッションを再生成
         $request->session()->regenerate();
-
         // ログイン後の画面へリダイレクト
-        // セッションタイムアウト時にユーザーの直前のリクエストが存在しない場合はRouteServiceProvider::HOMEへリダイレクトさせる
-        return redirect()->intended(RouteServiceProvider::HOME);
+        // セッションタイムアウト時にユーザーの直前のリクエストが存在しない場合はRouteServiceProvider::USER_HOMEへリダイレクトさせる
+        return redirect()->intended(RouteServiceProvider::USER_HOME);
     }
+
+    // adminログイン認証
+    public function adminStore(LoginRequest $request): RedirectResponse
+    {
+        // 認証(メソッドはRequest\LoginRequest.phpにある)
+        $request->adminAuthenticate();
+        // XSRFトークンを再生成
+        $request->session()->regenerateToken();
+        // ログイン後の画面へリダイレクト
+        // セッションタイムアウト時にユーザーの直前のリクエストが存在しない場合はRouteServiceProvider::ADMIN_HOMEへリダイレクトさせる
+        return redirect()->intended(RouteServiceProvider::ADMIN_HOME);
+    }
+
+
 
     /**
      * Destroy an authenticated session.
      */
+    // userログアウト
     public function destroy(Request $request): RedirectResponse
     {
-        Auth::guard('web')->logout();
-        // セッションからデータを削除してセッション自体を無効にする
+        Auth::logout();
+        // userセッション情報を削除
         $request->session()->invalidate();
         // XSRFトークンを再生成
         $request->session()->regenerateToken();
-        // '/'へリダイレクト
-        return redirect('/');
+        // RouteServiceProvider::HOMEへリダイレクト
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    // adminログアウト
+    public function adminDestroy(Request $request): RedirectResponse
+    {
+        Auth::guard('admin')->logout();
+        // adminセッション情報を削除
+        $request->session()->invalidate();
+        // XSRFトークンを再生成
+        $request->session()->regenerateToken();
+        // '/admin/login'へリダイレクト
+        return redirect()->route('admin.login')->with('success', '* ログアウトしました');
     }
 }

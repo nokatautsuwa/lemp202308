@@ -1,7 +1,7 @@
-@extends('admin.layouts.app')
+@extends('admin.app')
 
 @section('component')
-    @vite(['resources/sass/admin/auth.scss'])
+    @vite(['resources/sass/auth/auth.scss'])
 @endsection
 
 @section('title', '新規登録')
@@ -45,7 +45,7 @@
 
                 <!--パスワード: 伏字-->
                 <label>
-                    パスワード
+                    パスワード(半角英数字含む8文字以上)
                     <input type="password" name="password">
                 </label>
                 <!--エラーハンドリング-->
@@ -72,15 +72,25 @@
                 <div class='check'>
                     <!--User管理権限-->
                     <label>
-                        <input type="checkbox"  name="user-authority" value=1 class='checkbox'>
-                        ユーザー管理権限の付与
+                        <input type="checkbox" id="user-permission" name="user-permission" value=1 class='checkbox'>
+                        利用ユーザーの編集権限
                     </label>
 
                     <!--Admin管理権限-->
                     <label>
-                        <input type="checkbox" name="admin-authority" value=1 class='checkbox'>
-                        管理者権限の付与
+                        <input type="checkbox" id="admin-permission" name="admin-permission" value=1 class='checkbox'>
+                        管理者の編集権限
                     </label>
+                </div>
+                <div class='check'>
+                    <!--システム管理者権限-->
+                    <label>
+                        <input type="checkbox" id="system-permission" name="system-permission" value=1 class='checkbox'>
+                        システム管理者権限
+                    </label>
+                    <p id='description' class="help-block hidden">
+                        * 全利用ユーザー及び全管理者の編集権限を持つアカウントとして登録します
+                    </p>
                 </div>
 
                 <div class='submit'>
@@ -95,4 +105,8 @@
 
     </article>
 
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/permission.js') }}"></script>
 @endsection

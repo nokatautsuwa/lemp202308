@@ -88,7 +88,30 @@ class LoginRequest extends FormRequest
     // admin
     public function adminAuthenticate(): void
     {
+        // preg_match(): 正規表現を使った判別方法でaccount欄の値がメールアドレスかどうか判定
+        // $credentialsに配列で格納
+        // adminsテーブルを参照する(/config/auth.php)
+        if (preg_match('/^[a-z0-9._+^~-]+@[a-z0-9.-]+$/i', $this->input('account'))) {
+            // true: mailカラムとpasswordカラム
+            $credentials = [
+                'email' => $this->input('account'),
+                'password' => $this->input('password')
+            ];
+        } else {
+            // false: nameカラムとpasswordカラム
+            $credentials = [
+                'name' => $this->input('account'),
+                'password' => $this->input('password')
+            ];
+        }
 
+        // 認証: ログインに失敗したとき
+        if (! Auth::guard('admin')->attempt($credentials)) {
+            // デフォルトの設定はvendor/laravel/framework/src/Illuminate/Translation/lang/en/auth.phpの連想配列
+            throw ValidationException::withMessages([
+                'account' => trans('auth.failed'),
+            ]);
+        }
     }
 
 

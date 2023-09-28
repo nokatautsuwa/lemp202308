@@ -1,7 +1,7 @@
-@extends('admin.layouts.app')
+@extends('admin.app')
 
 @section('component')
-    @vite(['resources/sass/admin/auth.scss'])
+    @vite(['resources/sass/auth/auth.scss'])
 @endsection
 
 @section('title', 'ログイン')
