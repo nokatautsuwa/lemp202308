@@ -126,11 +126,9 @@ return [
     |
     */
 
-    'cookie' => env(
-        'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+    'cookie' => env('SESSION_COOKIE', Str::slug(env('APP_NAME', 'laravel'), '_').'_session' // user用のセッション
     ),
-
+    'cookie_admin' => Str::slug(env('APP_NAME', 'laravel'), '_').'_session_admin', // admin用のセッション
     /*
     |--------------------------------------------------------------------------
     | Session Cookie Path
@@ -155,7 +153,8 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN'),
+    // 'domain' => env('SESSION_DOMAIN'),
+    'domain' => null, // セッションが被らないようにする
 
     /*
     |--------------------------------------------------------------------------

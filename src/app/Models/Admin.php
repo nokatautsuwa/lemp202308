@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth; // 認証
 
 class Admin extends Authenticatable
 {
@@ -20,13 +21,13 @@ class Admin extends Authenticatable
         'email',
         'password',
         'image',
-        'user_authority',
-        'admin_authority',
+        'user_permission',
+        'admin_permission',
+        'system_permission',
         'updated_at',
     ];
     // JSONに含まれなくなる
     protected $hidden = [
-        'name',
         'email',
         'password',
     ];
@@ -39,4 +40,16 @@ class Admin extends Authenticatable
         'created_at',
         'updated_at',
     ];
+
+    // ログインユーザー情報を取得
+    public static function authUser()
+    {
+        return Admin::where('id', Auth::guard('admin')->user()->id)->first();
+    }
+
+    // Controllerから引数を受け取って対象のidユーザー情報を取得
+    public static function idUser($id)
+    {
+        return Admin::where('id', $id)->first();
+    }
 }

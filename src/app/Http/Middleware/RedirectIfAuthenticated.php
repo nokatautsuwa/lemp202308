@@ -15,21 +15,24 @@ class RedirectIfAuthenticated
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
+    // ログインしている状態で認証用ページへアクセスした時のリダイレクト先
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
-        $guards = empty($guards) ? [null] : $guards;
+        
+        if ($request->routeIs('admin.*')) {
 
-        foreach ($guards as $guard) {
+            // admin
+            if (Auth::guard('admin')->check()) {
+                return redirect(RouteServiceProvider::ADMIN_HOME);
+            }
 
-            // RouteServiceProvider.php
-            if (Auth::guard('user')->check()) {
+        } else {
+
+            // user
+            if (Auth::check()) {
                 return redirect(RouteServiceProvider::USER_HOME);
             }
 
-            // デフォルト設定
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
-            }
         }
 
         return $next($request);

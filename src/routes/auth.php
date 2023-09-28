@@ -8,34 +8,45 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\RegisteredAdminController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+
+
+// guestでadminとuserそれぞれのリダイレクト先を設定している
+
+
+
+// user
+// ------------------------------------------------
+
+// ログインしていない場合
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
 
+    // getにnameメソッドを追加して同じrouteのget/post両方にnameメソッドを適用している
+
+    // 新規登録
+    Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
-
+    // ログイン
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
-                ->name('password.request');
-
+    // パスワード再設定
+    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
                 ->name('password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-                ->name('password.reset');
-
+    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+
 });
 
+
+// ログインしている場合
 Route::middleware('auth')->group(function () {
+
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
 
@@ -49,11 +60,51 @@ Route::middleware('auth')->group(function () {
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
                 ->name('password.confirm');
-
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
 
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
+    // ログアウト
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+// ------------------------------------------------
+
+
+
+// admin
+// prefix('admin'): グループ内全ルートのURLに"admin/"を追加
+// name('admin.'): 名前付きルートのプレフィックス(ルート名の先頭に"admin."が追加される)
+// ------------------------------------------------
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+    // ログインしていない場合
+    Route::middleware('guest')
+        ->group(function () {
+
+        // 新規登録
+        Route::get('register', [RegisteredAdminController::class, 'create'])->name('register');
+        Route::post('register', [RegisteredAdminController::class, 'store'])->name('register.add');
+        // ログイン
+        Route::get('login', [AuthenticatedSessionController::class, 'adminCreate'])->name('login');
+        Route::post('login', [AuthenticatedSessionController::class, 'adminStore'])->name('login.attempt');
+
+    });
+
+
+    // ログインしている場合
+    Route::middleware('auth:admin')
+        ->group(function () {
+            
+        // ログアウト
+        Route::post('logout', [AuthenticatedSessionController::class, 'adminDestroy'])->name('logout');
+
+        });
+
+});
+
+// --------------------------------------------------

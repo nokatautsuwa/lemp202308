@@ -1,7 +1,7 @@
-@extends('admin.layouts.app')
+@extends('admin.app')
 
 @section('component')
-    @vite(['resources/sass/admin/request.scss'])
+    @vite(['resources/sass/profile/request.scss'])
 @endsection
 
 @section('title')
@@ -38,8 +38,6 @@
                             キャンセル
                         </a>
                     </p>
-                    <!-- ページを離れるときに確認メッセージを表示させる -->
-                    <script src="{{ asset('js/beforeunload.js') }}"></script>
                 </li>
             </ul>
 
@@ -47,4 +45,8 @@
 
     </article>
 
+@endsection
+
+@section('script')
+    <script src="{{ asset('js/beforeunload.js') }}"></script>
 @endsection

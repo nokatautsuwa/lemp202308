@@ -1,3 +1,5 @@
+<!-- views直下のapp.blade.phpはReactコンポーネントを読み込み用 -->
+<!-- adminフォルダを作成してapp.blade.phpを別途作成 -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -11,11 +13,11 @@
         <!-- CDNのreset.css(ress.css)URLを入力-->
         <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
 
-        <!-- Reactコンポーネント/SCSS読み込み -->
+        <!-- SCSS読み込み -->
         <!-------------------------------------------->
         @viteReactRefresh
         <!-- ページのベースになるコンポーネント -->
-        @vite(['resources/sass/admin/app.scss'])
+        @vite(['resources/sass/app.scss'])
         <!-- 各ページに合わせたコンポーネントを追加で取得する -->
         @yield('component')
         <!-------------------------------------------->
@@ -36,7 +38,7 @@
                 <!-- ヘッダー -->
                 <p>
                     <a href="{{ route('admin.home') }}">
-                        管理画面
+                        RESサービス管理画面
                     </a>
                 </p>
                 <!-- グローバルナビ -->
@@ -55,10 +57,15 @@
     </body>
 
 
+    <!-- メイン -->
+    <!--------------------------->
     @if (Auth::guard('admin')->check())
-    <!-- adminでログインしている場合のみ -->
+    <!-- adminでログインしている場合のみ共通で入れる -->
         <script src="{{ asset('js/menu.js') }}"></script>
     @endif
+    <!-- ページに合わせて対応するJavaScriptを入れる -->
+    @yield('script')
+    <!--------------------------->
 
 
 </html>
