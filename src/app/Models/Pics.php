@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User; // usersテーブル
+use App\Models\Admin; // adminsテーブル
 
-class Profile extends Model
+class Pics extends Model
 {
     use HasFactory;
 
@@ -15,36 +16,42 @@ class Profile extends Model
     // $guarded: レコード編集を許可しないカラム(ブラックリスト)
     protected $fillable = [
         'user_id',
-        'name',
-        'birth',
-        'created_at',
-        'updated_at',
+        'admin_id',
     ];
-
     protected $guarded = [
-        'user_id',
         'created_at',
-        'updated_at',
-    ];
-
-    // JSONに含まれなくなる
-    protected $hidden = [
-        'name',
-        'gender',
-        'birth',
-        'postcode',
-        'address',
-        'tel',
     ];
 
     // 日付のフォーマットを変えるformat関数を使えるようにする
     protected $dates = [
-        'birth',
+        'created_at',
+        'updated_at',
     ];
 
     // Userモデルに属していることを定義
     public function users()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Adminモデルに属していることを定義
+    public function admins()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+    
+
+    // Controllerから引数を受け取って対象のadmin_idのレコード情報を取得
+    // 担当ユーザーを取得するため
+    public static function adminIdPic(Int $id)
+    {
+        return Pics::where('admin_id', $id)->get();
+    }
+    
+    // Controllerから引数を受け取って対象のuser_idのレコード情報を取得
+    // 各ユーザーの担当者を取得するため
+    public static function userIdPic(Int $id)
+    {
+        return Pics::where('user_id', $id)->get();
     }
 }

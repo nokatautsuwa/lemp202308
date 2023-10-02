@@ -8,6 +8,8 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.jsx',
+        // resources/ts配下のコンポーネントファイルに適用させる
+        './resources/ts/**/*.jsx',
     ],
 
     theme: {

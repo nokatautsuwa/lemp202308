@@ -16,6 +16,12 @@
         </a>
     </li>
     <li>
+        <a href="{{ route('admin.register') }}">
+            <img src="{{ asset('images/close.svg') }}" alt="settings">
+            新規登録
+        </a>
+    </li>
+    <li>
         <form method="POST" action="{{ route('admin.logout') }}">
             @csrf
             <button type="submit" onclick="return confirm('ログアウトします。よろしいですか？');">

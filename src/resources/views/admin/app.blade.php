@@ -13,10 +13,15 @@
         <!-- CDNのreset.css(ress.css)URLを入力-->
         <link rel="stylesheet" href="https://unpkg.com/ress@4.0.0/dist/ress.min.css">
 
-        <!-- SCSS読み込み -->
+        <!-- コンポーネント読み込み -->
         <!-------------------------------------------->
         @viteReactRefresh
         <!-- ページのベースになるコンポーネント -->
+        @vite(['resources/sass/app.scss'])
+        @if (Auth::guard('admin')->check())
+        <!-- adminでログインしている場合のみ共通で入れる -->
+            @vite(['resources/ts/vanilla/menu.js'])
+        @endif
         @vite(['resources/sass/app.scss'])
         <!-- 各ページに合わせたコンポーネントを追加で取得する -->
         @yield('component')
@@ -55,17 +60,6 @@
         </main>
 
     </body>
-
-
-    <!-- メイン -->
-    <!--------------------------->
-    @if (Auth::guard('admin')->check())
-    <!-- adminでログインしている場合のみ共通で入れる -->
-        <script src="{{ asset('js/menu.js') }}"></script>
-    @endif
-    <!-- ページに合わせて対応するJavaScriptを入れる -->
-    @yield('script')
-    <!--------------------------->
 
 
 </html>

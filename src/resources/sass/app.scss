@@ -13,14 +13,68 @@
 
 
 
-// スクロールバーは非表示
+// ページ全体デザイン
+// ------------------------------------------
+// スクロールバー
 ::-webkit-scrollbar {
   /*display: none;*/
 }
+// ------------------------------------------
 
 
 
-// ページ全体
+//タグの設定
+// ------------------------------------------
+a,
+li,
+button {
+  color: var(--color-black);
+  font-size: var(--font-m);
+  letter-spacing: var(--font-space);
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+select,
+input[type='checkbox'] {
+  cursor: pointer;
+}
+
+input,
+select {
+  font-size: 16px;
+  letter-spacing: var(--font-space);
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin: 5px 0;
+}
+
+button,
+button[type="submit"] {
+  display: block;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  font-size: var(--font-s);
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 0 5px;
+
+  a {
+    color: var(--color-black);
+    font-size: var(--font-s);
+  }
+}
+// ------------------------------------------
+
+
+
+// コンテンツ
 // ------------------------------------------
 body {
   color: var(--color-black);
@@ -29,47 +83,6 @@ body {
   letter-spacing: var(--font-space);
   line-height: var(--font-line);
   margin: 0;
-
-  // bodyで一括設定できないタグの設定
-  a,
-  li,
-  button {
-    color: var(--color-black);
-    font-size: var(--font-m);
-    letter-spacing: var(--font-space);
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  li {
-    list-style: none;
-  }
-
-  input {
-    font-size: 16px;
-    letter-spacing: var(--font-space);
-    border-radius: 50px;
-    padding: 10px 20px;
-    margin: 5px 0;
-  }
-
-  button,
-  button[type="submit"] {
-    display: block;
-    color: var(--color-white);
-    background-color: var(--color-black);
-    font-size: var(--font-s);
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin: 0 5px;
-
-    a {
-      color: var(--color-black);
-      font-size: var(--font-s);
-    }
-  }
 
   // ヘッダー
   header {
@@ -124,6 +137,7 @@ body {
           a,
           button {
             display: block;
+            text-align: left;
             width: 100%;
             color: var(--color-black);
             font-size: var(--font-s);
@@ -151,128 +165,92 @@ body {
   main {
     display: grid;
     place-items: start center;
-    overflow-x: hidden;
 
-    article {
-      margin-top: 35px;
+    div {
+      margin-top: 60px;
 
-      // sessionメッセージ
-      .alert-success {
+      a {
+        display: inline-block;
+        color: var(--color-white);
+        background-color: var(--color-black);
         font-size: var(--font-s);
-        font-weight: bold;
-        margin-bottom: 10px;
+        border-radius: 20px;
+        padding: 10px 20px;
       }
 
-      section {
-        width: 100%;
-        margin-top:20px;
+      .title {
+        font-weight: bold;
+        border-left: 2px solid var(--color-white-gray);
+        padding-left: 10px;
+        margin-bottom: 20px;
+      }
+
+      table {
+        display: grid;
+        place-items: start center;
+        font-size: var(--font-s);
+        text-align: left;
+        border-collapse: collapse; /* table間の隙間を無くす*/
 
         a {
-          display: inline-block;
-          color: var(--color-white);
-          background-color: var(--color-black);
-          font-size: var(--font-s);
-          border-radius: 20px;
-          padding: 10px 20px;
-        }
-
-        .title {
-          font-weight: bold;
-          border-left: 2px solid var(--color-white-gray);
-          padding-left: 10px;
-          margin-bottom: 20px;
-        }
-
-        table {
-          font-size: var(--font-s);
-          text-align: left;
-          border-collapse: collapse; /* table間の隙間を無くす*/
-
-          tr {
-
-            th,
-            td {
-              max-width: 20vw;
-              white-space: nowrap;
-              overflow-x: hidden;
-              text-overflow: ellipsis; /* 枠外のテキストを...にする */
-              border-bottom: 1px solid var(--color-white-gray);
-              padding: 5px;
-            }
-
-            td {
-              width: 200px;
-            }
-          }
-
-          .table-title {
-            font-weight: bold;
-            background-color: var(--color-white-gray);
-          }
-        }
-
-        label {
-          font-size: var(--font-s);
-        }
-
-        input {
           color: var(--color-black);
-          background-color: #FFFFFF;
-          width: 100%;
+          padding: 0;
+          border-radius: 0;
+          background-color: transparent;
+          border-bottom: 1px solid;
         }
 
-        .help-block {
-          color: #cc0000;
-          font-size: var(--font-s);
+        tr {
+
+          th,
+          td {
+            max-width: 19vw;
+            white-space: nowrap;
+            overflow-x: hidden;
+            text-overflow: ellipsis; /* 枠外のテキストを...にする */
+            border-bottom: 1px solid var(--color-white-gray);
+            padding: 5px;
+          }
+
+          td {
+            width: 200px;
+          }
+        }
+
+        .table-title {
           font-weight: bold;
+          background-color: var(--color-white-gray);
         }
+      }
 
-        .check {
-          display: grid;
-          place-items: center;
-          margin-top: 10px;
-        }
+      label {
+        font-size: var(--font-s);
+      }
 
-        .checkbox {
-          width: initial;
-          text-align: center;
-        }
+      input,
+      select {
+        color: var(--color-black);
+        background-color: #FFFFFF;
+        width: 100%;
+      }
 
-        .submit {
-          display: flex;
-          margin-top: 20px;
+      .check {
+        display: grid;
+        place-items: center;
+        margin-top: 10px;
+      }
 
-          button,
-          a {
-              display: inline-block;
-          }
+      .checkbox {
+        width: initial;
+        text-align: center;
+      }
 
-          a {
-            display: block;
-            color: var(--color-white);
-            background-color: var(--color-black);
-            font-size: var(--font-s);
-            border-radius: 20px;
-            padding: 10px 20px;
-            margin: 0 5px;
-          }
-        }
+      .submit {
+        display: flex;
+        margin-top: 20px;
       }
     }
   }
-}
-// ------------------------------------------
-
-
-
-// JSによる表示/非表示切替
-// ------------------------------------------
-.hidden {
-  display: none;
-}
-
-.active {
-  display: block;
 }
 // ------------------------------------------
 
@@ -285,5 +263,40 @@ footer {
   display: grid;
   place-items: start center;
   margin-bottom: 20px;
+}
+// ------------------------------------------
+
+
+
+// 制御
+// ------------------------------------------
+// 非表示にする
+.hidden {
+  display: none;
+}
+
+// 表示する
+.active {
+  display: block;
+}
+
+// 無効化する
+.disable {
+  color: var(--color-white-gray);
+}
+
+// アラート/セッションメッセージ
+.alert-success {
+  font-size: var(--font-s);
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+// エラーメッセージ
+.help-block {
+  color: #cc0000;
+  font-size: var(--font-s);
+  font-weight: bold;
+  margin: 5px 0;
 }
 // ------------------------------------------

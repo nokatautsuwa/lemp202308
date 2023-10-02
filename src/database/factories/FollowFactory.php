@@ -17,18 +17,14 @@ class FollowFactory extends Factory
      */
     public function definition(): array
     {
-        // ランダムなfollowユーザーを取得
+        // ランダムなuserレコードを取得
         $follow = User::inRandomOrder()->first();
-        // follow_idにusersテーブルのidを入れる
-        $follow_id = $follow->id;
-        // ランダムなfollowerユーザーを取得
+        // ランダムなuserレコードを取得
         $follower = User::inRandomOrder()->first();
-        // follower_idにusersテーブルのidを入れる
-        $follower_id = $follower->id;
 
         return [
-            'follow_id' => $follow_id,
-            'follower_id' => $follower_id,
+            'follow_id' => $follow->id,
+            'follower_id' => $follower->id,
         ];
     }
 }

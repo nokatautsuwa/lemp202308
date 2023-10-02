@@ -1,20 +1,16 @@
 // メイン部分
 main {
 
-  article {
+  div{
     width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 
-    section {
-      margin: 0 10px;
-    }
-
-    .left {
-      place-items: start;
+    aside {
       width: 20%;
-      min-width: 320px;
+      min-width: 300px;
+      margin: 0 15px 10px 15px;
 
       .account {
         display: flex;
@@ -22,6 +18,11 @@ main {
         li {
           margin: auto 0;
           font-weight: bold;
+
+          .user-account-id {
+            font-size: var(--font-s);
+            color: #AAAAAA;
+          }
           
           img {
             width: 50px;
@@ -55,22 +56,76 @@ main {
         li:first-child {
           color: var(--color-black);
           font-size: var(--font-s);
-          margin-bottom: 5px;
+        }
+      }
+
+      .request {
+        display: flex;
+
+        li {
+          margin: 0 5px;
+
+          p {
+            margin-bottom: 10px;
+          }
         }
       }
 
       ul {
-        margin: 10px 0;
+        margin: 20px 0;
       }
     }
 
-    .right {
+    .dashboard {
+      margin: 0 0 10px 0;
       display: block;
       width: 50%;
       min-width: 320px;
-      padding: 15px;
-      background-color: #FFFFFF;
-      border-radius: 10px;
+
+      ul {
+        background-color: #FFFFFF;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+
+        li {
+          margin-bottom: 10px;
+
+          div {
+            display: flex;
+            justify-content: left;
+            margin: 0 0 5px 0;
+            font-weight: bold;
+          }
+
+          img {
+            height: 20px;
+            width: auto;
+            border-radius: 50%;
+            margin-right: 10px;
+          }
+
+          p {
+            font-size: var(--font-s);
+            margin: auto 0;
+          }
+        }
+
+        table {
+
+          tr {
+
+            th,
+            td {
+              max-width: 15vw;
+            }
+          }
+        }
+      }
+
+      .history {
+        background-color: transparent;
+      }
     }
   }
 }
