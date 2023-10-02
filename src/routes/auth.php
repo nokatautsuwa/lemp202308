@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\RegisteredAdminController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -86,12 +85,13 @@ Route::prefix('admin')
     Route::middleware('guest')
         ->group(function () {
 
-        // 新規登録
-        Route::get('register', [RegisteredAdminController::class, 'create'])->name('register');
-        Route::post('register', [RegisteredAdminController::class, 'store'])->name('register.add');
         // ログイン
         Route::get('login', [AuthenticatedSessionController::class, 'adminCreate'])->name('login');
         Route::post('login', [AuthenticatedSessionController::class, 'adminStore'])->name('login.attempt');
+
+        // パスワード登録
+        Route::get('password/register', [AuthenticatedSessionController::class, 'adminPasswordCreate'])->name('password');
+        Route::post('password/register', [AuthenticatedSessionController::class, 'adminPasswordStore'])->name('password.add');
 
     });
 

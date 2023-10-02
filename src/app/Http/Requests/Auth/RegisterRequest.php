@@ -35,20 +35,24 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         // バリデーションルール
-        $rules = [
-            'password' => ['required', 'regex:/\A(?=.?[a-z])(?=.*?\d)[a-zA-Z\d]{8,}+\z/'],
-            'password_confirmation' => ['same:password'],
-        ];
-
         if (request()->is('admin/*')) {
-            // adminsの場合に追加するルールを定義
-            $rules['name'] = ['required', 'unique:admins'];
-            $rules['email'] = ['required', 'email', 'unique:admins'];
+
+            $rules = [
+                'name' => ['required', 'unique:admins'],
+                'email' => ['required', 'email', 'unique:admins'],
+            ];
+
         } else {
-            // admins以外の場合(users)に追加するルールを定義
-            $rules['name'] = ['required'];
-            $rules['account_id'] = ['required', 'regex:/\A([a-zA-Z0-9])+\z/u', 'unique:users'];
-            $rules['email'] = ['required', 'email', 'unique:users'];
+
+            // admins以外
+            $rules = [
+                'name' => ['required'],
+                'account_id' => ['required', 'regex:/\A([a-zA-Z0-9])+\z/u', 'unique:users'],
+                'email' => ['required', 'email', 'unique:users'],
+                'password' => ['required', 'regex:/\A(?=.?[a-z])(?=.*?\d)[a-zA-Z\d]{8,}+\z/'],
+                'password_confirmation' => ['same:password'],
+            ];
+
         }
 
         return $rules;
@@ -76,24 +80,35 @@ class RegisterRequest extends FormRequest
     // admin
     public function adminRegister(): void
     {
-        // checkboxの状態を取得する
-        $user_permission = $this->input('user-permission') ?? 0;
-        $admin_permission = $this->input('admin-permission') ?? 0;
+        // システム管理者のcheckboxの状態を取得する
         $system_permission = $this->input('system-permission') ?? 0;
 
+        // システム管理者にチェックが入っている場合
+        // ユーザー管理権限/admin管理権限は強制的に0にする
+        if($system_permission !== 0) {
+
+            $user_permission = 0;
+            $admin_permission = 0;
+
+        } else {
+            $user_permission = $this->input('user-permission') ?? 0;
+            $admin_permission = $this->input('admin-permission') ?? 0;
+
+        }
+
         // adminsテーブルへ登録
+        // * passwordは自身で設定させるようにするためここでは追加しない
         $admin = Admin::create([
             'name' => $this->input('name'),
             'account_id' => $this->input('account_id'),
             'email' => $this->input('email'),
-            'password' => Hash::make($this->input('password')),
+            'place' => $this->input('place'),
+            'area' => $this->input('area'),
             'user_permission' => $user_permission,
             'admin_permission' => $admin_permission,
             'system_permission' => $system_permission,
         ]);
         event(new Registered($admin));
-        // 登録したユーザーでログイン
-        Auth::guard('admin')->login($admin);
     }
 
 

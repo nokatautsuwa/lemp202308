@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ProfilesTableSeeder::class); //profilesテーブルのSeederを実行
         $this->call(FollowsTableSeeder::class); //followsテーブルのSeederを実行
         $this->call(AdminsTableSeeder::class); //adminsテーブルのSeederを実行
+        $this->call(PicsTableSeeder::class); //picsテーブルのSeederを実行
+        $this->call(PlacesTableSeeder::class); //picsテーブルのSeederを実行
+        $this->call(AreasTableSeeder::class); //picsテーブルのSeederを実行
 
         // php artisan db:seedで
         // 'Target class [DatabaseSeeder(もしくはSeederファイル名)] does not exist.'

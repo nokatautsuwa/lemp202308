@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminRequestController;
 use Illuminate\Foundation\Application;
@@ -63,19 +65,22 @@ Route::middleware('auth:admin')
     ->name('admin.')
     ->group(function () {
 
+    // 新規登録
+    // * 管理者側はシステム管理者権限または管理者編集権限を持っているアカウントのみ新規登録ができるようにする
+    Route::get('register', [AdminRegisterController::class, 'create'])->name('register');
+    Route::post('register', [AdminRegisterController::class, 'store'])->name('register.add');
+
     // ホーム画面
     Route::get('home', [AdminHomeController::class, 'index'])->name('home');
+
+    // ユーザー管理画面
+    Route::get('user/{account_id}', [AdminUserController::class, 'profile'])->name('user.profile');
 
     // プロフィール: bladeから連想配列パラメータ(key: account_idに対応するvalue値(adminsテーブルのid))を受け取る
     // -------------------------------
     // アカウントページ
     Route::get('profile/{id}', [AdminProfileController::class, 'profile'])->name('profile');
-    // 各種設定: ユーザー編集権限/管理者権限で条件を出す
-    // 0/0: 無/自分のプロフィール編集のみ
-    // 1/0: 有/自分のプロフィール編集のみ
-    // 0/1: 無/所属部署の管理者の編集可
-    // 1/1: 有/所属部署の管理者の編集可
-    // システム管理者: 全部署全権限あり(未実装)
+    // 編集
     Route::put('profile/{id}/edit', [AdminProfileController::class, 'update'])->name('settings');
     // アカウント削除: bladeから連想配列パラメータ(key: idに対応するvalue値(adminsテーブルのid))を受け取る
     Route::delete('profile/{id}/destroy', [AdminProfileController::class, 'destroy'])->name('delete');

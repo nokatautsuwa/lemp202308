@@ -12,41 +12,53 @@ html {
 // ------------------------------------------
 body {
 
-    // メイン
-    main {
-      height: 100vh;
-      place-items: center;
+  // メイン
+  main {
+    height: 100vh;
+    place-items: center;
 
-      article {
-        width: 350px;
-        max-height: 550px;
-        overflow-y: scroll;
-        margin: 0;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid var(--color-white-gray);
+    div {
+      width: 350px;
+      max-height: 550px;
+      overflow-y: scroll;
+      margin: 0;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--color-white-gray);
 
-        section {
-          margin:0;
+      .title {
+        font-size: var(--font-m);
+        margin-bottom: 15px;
+        padding-left: 10px;
+        border-left: 2px solid var(--color-white-gray);
+      }
 
-          .title {
-            font-size: var(--font-m);
-            margin-bottom: 15px;
-            padding-left: 10px;
-            border-left: 2px solid var(--color-white-gray);
-          }
+      .guide {
+        display: grid;
+        place-items: center;
+        margin-top: 10px;
 
-          .submit {
-            justify-content: center;
+        a {
+          color: var(--color-black);
+          background-color: transparent;
+          border-radius: 0;
+          font-size: var(--font-s);
+          font-weight: bold;
+          border-bottom: 1px solid;
+          padding: 0 5px;
+        }
+      }
 
-            button,
-            a {
-                margin: 0 5px;
-            }
-          }
+      .submit {
+        justify-content: center;
+
+        button,
+        a {
+            margin: 0 5px;
         }
       }
     }
+  }
 }
 // ------------------------------------------
 

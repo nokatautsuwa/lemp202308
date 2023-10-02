@@ -34,10 +34,22 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         // バリデーションルール
-        return [
-            'account' => ['required'],
-            'password' => ['required'],
-        ];
+        if (request()->is('admin/*')) {
+
+            // admins
+            return [
+                'account' => ['required'],
+            ];
+
+        } else {
+
+            // admins以外
+            return [
+                'account' => ['required'],
+                'password' => ['required'],
+            ];
+
+        }
     }
 
 

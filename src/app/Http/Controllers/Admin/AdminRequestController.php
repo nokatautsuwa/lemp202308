@@ -13,8 +13,8 @@ class AdminRequestController extends Controller
     // Admin権限を持っている同じ配属先の上長への各種申請
     public function request(Admin $admin)
     {
-        // Admin.phpのauthUserメソッドからログインレコードを取得
-        $admin = $admin->authUser();
+        // Admin.phpのauthAdminメソッドからログインレコードを取得
+        $admin = $admin->authAdmin();
 
         return view('admin.profile.request', compact('admin'));
     }

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth; // 認証
+use App\Models\Profile; // profilesテーブル
+use App\Models\Follow; // followsテーブル
+use App\Models\Pics; // picsテーブル
 
 class User extends Authenticatable
 {
@@ -61,24 +64,6 @@ class User extends Authenticatable
         'created_at',
     ];
 
-    // 全ユーザーの情報を取得
-    public static function allUser()
-    {
-        return User::all();
-    }
-
-    // ログインユーザー情報を取得
-    public static function authUser()
-    {
-        return User::where('id', Auth::guard('user')->user()->id)->first();
-    }
-
-    // Controllerから引数を受け取って対象のaccount_idユーザー情報を取得
-    public static function eachUserAccountId($account_id)
-    {
-        return User::where('account_id', $account_id)->first();
-    }
-
     // UserモデルからProfileモデルに関連付けられたデータを取得(1:1)
     public function profiles()
     {
@@ -95,5 +80,30 @@ class User extends Authenticatable
     public function followsFollowerId()
     {
         return $this->hasMany(Follow::class, 'follower_id');
+    }
+
+    // UserモデルからPicsモデル(user_id)に関連付けられたデータを取得(1:多)
+    public function picsUserId()
+    {
+        return $this->hasMany(Pics::class, 'user_id');
+    }
+    
+
+    // 全ユーザーの情報を取得
+    public static function allUser()
+    {
+        return User::all();
+    }
+
+    // ログインユーザー情報を取得
+    public static function authUser()
+    {
+        return User::where('id', Auth::guard('user')->user()->id)->first();
+    }
+
+    // Controllerから引数を受け取って対象のaccount_idユーザー情報を取得
+    public static function eachUserAccountId(String $account_id)
+    {
+        return User::where('account_id', $account_id)->first();
     }
 }
