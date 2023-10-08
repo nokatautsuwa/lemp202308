@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth; // 認証
 
 class AdminHomeController extends Controller
 {
-    public function index(User $user)
+    public function index(User $users)
     {
         // ホーム画面
-        $users = $user->allUser();
+        $users = $users->allUser();
         return view('admin.home', compact('users'));
     }
 }

@@ -87,7 +87,7 @@ Route::prefix('admin')
 
         // ログイン
         Route::get('login', [AuthenticatedSessionController::class, 'adminCreate'])->name('login');
-        Route::post('login', [AuthenticatedSessionController::class, 'adminStore'])->name('login.attempt');
+        Route::post('login', [AuthenticatedSessionController::class, 'adminStore'])->name('login');
 
         // パスワード登録
         Route::get('password/register', [AuthenticatedSessionController::class, 'adminPasswordCreate'])->name('password');

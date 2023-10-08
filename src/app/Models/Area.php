@@ -15,4 +15,10 @@ class Area extends Model
     protected $fillable = [
         'area',
     ];
+
+    // areaの選択肢を作成
+    public static function area()
+    {
+        return Place::distinct()->pluck('area');
+    }
 }

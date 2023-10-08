@@ -14,8 +14,8 @@ class AdminsTableSeeder extends Seeder
     public function run(): void
     {
         Admin::create([
-            'name' => 'admin_test1',
-            'email' => 'test@test.test',
+            'name' => 'system',
+            'email' => 'system@test.test',
             // 'email_verified_at' => now(),
             'password' => bcrypt('test0000'),
             // 'remember_token' => Str::random(10),

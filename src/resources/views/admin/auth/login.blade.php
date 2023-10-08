@@ -17,7 +17,7 @@
 
         <p class='title'>ログイン</p>
 
-        <form method="POST" action="{{ route('admin.login.attempt') }}">
+        <form method="POST" action="{{ route('admin.login') }}">
                 <!---                           ---------------------------------------------->
             <!--CSRFトークン-->
             @csrf

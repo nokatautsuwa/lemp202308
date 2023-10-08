@@ -13,11 +13,13 @@
 
         <p class='title'>サービス利用ユーザー一覧</p>
 
+        <p class="alert-success">* xは現在論理削除されているアカウントです</p>
+
         <table>
 
             <!-- 項目タイトル -->
             <tr class='table-title'>
-                <th>c</th>
+                <th>⚫︎</th>
                 <th>No.</th>
                 <td>ユーザー名</td>
                 <td>ステータス</td>
@@ -28,9 +30,14 @@
             <!-- tableリスト -->
             @foreach ($users as $user)
                 <tr>
-                    <th>c</th>
                     <th>
-                        <a href="{{ route('admin.user.profile', ['account_id' => $user->account_id]) }}">
+                        @if ($user->deleted_at !== null)
+                        <!-- 論理削除されているユーザーを判別できるようにする -->
+                            x
+                        @endif
+                    </th>
+                    <th>
+                        <a href="{{ route('admin.user', ['account_id' => $user->account_id]) }}">
                             {{ $user->id }}
                         </a>
                     </th>

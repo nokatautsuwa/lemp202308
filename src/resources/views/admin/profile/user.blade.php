@@ -2,6 +2,22 @@
 
 @section('component')
     @vite(['resources/sass/profile/profile.scss'])
+
+    <!-- * ユーザーページは基本閲覧のみ -->
+    <!-- システム管理者であれば他の権限はない状態のためシステム管理者であるかどうかの判定はしない -->
+
+    <!-- 削除機能 -->
+    <!---------------------------------------------------------->
+    @if (Auth::guard('admin')->user()->admin_permission === 1)
+    <!-- 自分が管理者編集権限を持っている -->
+
+        @if ($admins->contains('id', Auth::guard('admin')->user()->id))
+        <!-- 担当者に自分が入っている場合に編集可 -->
+            @vite(['resources/ts/vanilla/DeleteModalWindow.js'])
+        @endif
+
+    @endif
+    <!---------------------------------------------------------->
 @endsection
 
 @section('title')
@@ -28,12 +44,17 @@
             </li>
         </ul>
 
+        @if ($users->deleted_at !== null)
+        <!-- 論理削除されている管理者を判別できるようにする -->
+            <p class='help-block'>* このユーザーは削除されています</p>
+        @endif
+
         <ul class="place">
 
             <li>
                 <p>
                     <span>ステータス</span>
-                    <span>sample</span>
+                    <span>{{ $users->status }}</span>
                 </p>
             </li>
             <li>
@@ -47,37 +68,34 @@
        <!---------------------------------------------------------->
 
 
-        <!-- 編集 -->
+        <!-- 削除機能 -->
        <!---------------------------------------------------------->
-        <ul class="request">
-            @if ($admins->contains('id', Auth::guard('admin')->user()->id) && Auth::guard('admin')->user()->system_permission !== 1)
-            <!-- 担当者に自分が入っている -->
-            <!-- 自分がシステム管理者でない -->
+        @if (Auth::guard('admin')->user()->admin_permission === 1)
+        <!-- 自分が管理者編集権限を持っている -->
 
-                @if (Auth::guard('admin')->user()->user_permission === 1)
-                <!-- 自分にユーザー編集権限がついている(1/*/*) -->
-                    <li>
-                        <p>
-                            <a href="{{ route('admin.request') }}">
-                                編集
-                            </a>
-                        </p>
+            @if ($admins->contains('id', Auth::guard('admin')->user()->id))
+            <!-- 担当者に自分が入っている場合に編集可 -->
+
+                <ul class="request">
+
+                    <li id='delete'>
+                        <p>管理者削除</p>
                     </li>
-                @else
-                <!-- 自分にユーザー編集権限がついていない(0/*/*) -->
-                    <li>
-                        <p class='help-block'>* ユーザー編集権限がありません。編集する際は申請をお願いいたします。</p>
-                        <p>
-                            <a href="{{ route('admin.request') }}">
-                                各種申請
-                            </a>
-                        </p>
-                    </li>
-                @endif
+                    <!-- 削除モーダルウィンドウ -->
+                    @include('admin.layouts.user_delete_modal')
+
+                </ul>
 
             @endif
-        </ul>              
-       <!---------------------------------------------------------->            
+
+        @endif
+       <!---------------------------------------------------------->     
+
+
+        @if(session('success'))
+            <!--処理が成功してリダイレクトしたときに表示する-->
+            <p class="alert-success">{{ session('success') }}</p>
+        @endif         
 
     </aside>
 
@@ -88,7 +106,7 @@
 
         <ul>
 
-            <p class='title'>アサイン</p>
+            <p class='title'>担当者</p>
 
             <table>
 
@@ -110,6 +128,9 @@
                             @if ($admin->id === Auth::guard('admin')->user()->id)
                             <!-- ログイン管理者を判別できるようにする -->
                                 ⚫︎
+                            @elseif ($admin->deleted_at !== null)
+                            <!-- 論理削除されている管理者を判別できるようにする -->
+                                x
                             @endif
                         </th>
                         <th>
@@ -125,7 +146,7 @@
                             @endif
                         </td>
                         <td>{{ $admin->place }}</td>
-                        <td>{{ $admin->updated_at->format('Y/m/d H:m') }}</td>
+                        <td>{{ $admin->updated_at->format('Y/m/d H:i') }}</td>
                         <td>{{ $admin->created_at->format('Y/m/d') }}</td>
                     </tr>
                 @endforeach
@@ -146,7 +167,7 @@
                 <li>
                     <div>
                         <img src="{{ asset('images/'. $user_histories_type_icon[$history->type]) }}" alt="{{ $history->type }}">
-                        <p>{{ $history->created_at->format('Y/m/d H:m') }}</p>
+                        <p>{{ $history->created_at->format('Y/m/d H:i') }}</p>
                         <p>{{ $user_histories_type_message[$history->type] }}</p>
                     </div>
                 </li>

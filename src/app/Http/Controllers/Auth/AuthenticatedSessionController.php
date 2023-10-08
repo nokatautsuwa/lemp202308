@@ -41,9 +41,9 @@ class AuthenticatedSessionController extends Controller
      * Handle an incoming authentication request.
      */
     // userログイン認証
-    public function store(LoginRequest $request, Admin $admin): RedirectResponse
+    public function store(LoginRequest $request): RedirectResponse
     {
-        // 認証(メソッドはRequest\LoginRequest.phpにある)
+        // 認証(メソッドはRequest/Auth/LoginRequest.phpにある)
         $request->authenticate();
         // セッションを再生成
         $request->session()->regenerate();
@@ -53,24 +53,33 @@ class AuthenticatedSessionController extends Controller
     }
 
     // adminログイン認証
-    public function adminStore(LoginRequest $request, Admin $admin): RedirectResponse
+    public function adminStore(LoginRequest $request, Admin $admins): RedirectResponse
     {
-        // ログインしようとしているアカウントにパスワードが設定されていない場合はパスワード登録画面にリダイレクトさせる
+        // ログイン認証前の確認
         // ------------------------------------
         // preg_match(): 正規表現を使った判別方法でaccount欄の値がメールアドレスかどうか判定してそのレコードを取得
         if (preg_match('/^[a-z0-9._+^~-]+@[a-z0-9.-]+$/i', $request->input('account'))) {
-            $admin = $admin->where('email', $request->input('account'))->first();
+            $admins = $admins->where('email', $request->input('account'))->first();
         } else {
-            $admin = $admin->where('name', $request->input('account'))->first();
+            $admins = $admins->where('name', $request->input('account'))->first();
         }
 
-        if($admin->password === null) {
+        // ログインしようとしているアカウントにパスワードが設定されていない場合はパスワード登録画面にリダイレクトさせる
+        if($admins->password === null) {
             return redirect()->route('admin.password')->with('success', '* パスワードが登録されていません。登録をお願いいたします。');
+        }
+
+        // ログインしようとしているアカウントが論理削除状態の場合は戻す
+        if ($admins->deleted_at !== null) {
+            return redirect()->back()->withInput()->with('success', '* このアカウントは削除されています');
         }
         // ------------------------------------
 
-        // 認証(メソッドはRequest\LoginRequest.phpにある)
+        // 認証(メソッドはRequest/Auth/LoginRequest.phpにある)
+        // ------------------------------------
         $request->adminAuthenticate();
+        // ------------------------------------
+        
         // XSRFトークンを再生成
         $request->session()->regenerateToken();
         // ログイン後の画面へリダイレクト

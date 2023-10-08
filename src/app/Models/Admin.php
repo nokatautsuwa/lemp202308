@@ -29,6 +29,7 @@ class Admin extends Authenticatable
         'user_permission',
         'admin_permission',
         'system_permission',
+        'status',
         'updated_at',
     ];
     // JSONに含まれなくなる
@@ -37,25 +38,15 @@ class Admin extends Authenticatable
     ];
     protected $guarded = [
         'created_at',
+        'deleted_at',
     ];
 
     // 日付のフォーマットを変えるformat関数を使えるようにする
     protected $dates = [
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
-
-    // placeの選択肢を作成
-    public static function place()
-    {
-        return Place::distinct()->orderBy('place', 'asc')->pluck('place');
-    }
-
-    // areaの選択肢を作成
-    public static function area()
-    {
-        return Place::distinct()->pluck('area');
-    }
 
     // AdminモデルからPicsモデル(admin_id)に関連付けられたデータを取得(1:多)
     public function picsAdminId()
