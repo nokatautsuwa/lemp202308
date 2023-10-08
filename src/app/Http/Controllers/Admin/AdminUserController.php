@@ -4,17 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // 認証
 use App\Models\User; // usersテーブル
 use App\Models\Pics; // picsテーブル
 use App\Models\Admin; // adminsテーブル
 use App\Models\UserHistory; // user_historiesテーブル
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminUserController extends Controller
 {
     // Dependency Injectionを使用してModelのインスタンスを自動で取得/$変数名として使用できるようになる
 
     // 各管理者のプロフィール
-    public function profile(
+    public function user(
         User $users, 
         Pics $pics, 
         Admin $admins, 
@@ -68,6 +72,75 @@ class AdminUserController extends Controller
     }
 
 
+
+    // キャンセル
+    public function cancel(String $account_id)
+    {
+        return redirect()->back()->with('success', '* キャンセルしました');
+    }
+
+
+
+    // アカウント論理削除
+    public function softDelete(Request $request, User $users, String $account_id): RedirectResponse 
+    {
+        // パスワードが一致しない場合は中止
+        // -------------------------------------
+        if (!Hash::check($request->input('password'), Auth::guard('admin')->user()->password)) {
+            if ($request->input('password') === null) {
+                return redirect()->back()->withInput()->with('success', '* 削除にはログインパスワードが必要です');
+            } else {
+                return redirect()->back()->withInput()->with('success', '* パスワードが違います');
+            }
+        }
+        // -------------------------------------
+        // 該当ユーザーのレコードを取得する
+        $users = $users->eachUserAccountId($account_id);
+
+        // どのアカウントが削除されたかを取得するための情報を設定する
+        $user_message = '* ' . $users->name . 'を削除しました';
+
+        // 該当ユーザーのdeleted_atに現在時刻を入れて保存
+        // save()でupdated_atが現在時刻に更新される
+        $users->deleted_at = now();
+        $users->save();
+
+        // ホーム画面へ
+        return redirect()->route('admin.home')->with('success', $user_message);
+
+    }
+
+
+
+    // アカウントレコード削除
+    public function destroy(Request $request, User $users, String $account_id): RedirectResponse 
+    {
+        // パスワードが一致しない場合は中止
+        // -------------------------------------
+        if (!Hash::check($request->input('password'), Auth::guard('admin')->user()->password)) {
+            if ($request->input('password') === null) {
+                return redirect()->back()->withInput()->with('success', '* 削除にはログインパスワードが必要です');
+            } else {
+                return redirect()->back()->withInput()->with('success', '* パスワードが違います');
+            }
+        }
+        // -------------------------------------
+        // 該当ユーザーのレコードを取得する
+        $users = $users->eachUserAccountId($account_id);
+
+        // 削除するアカウントのid名のフォルダごと削除する
+        // * config/filesystems.phpの'disks'にあるメソッドを要確認
+        Storage::deleteDirectory('public/images/user/' . $users->id, true);
+
+        // どのアカウントが削除されたかを取得するための情報を設定する
+        $user_message = '* ' . $users->name . 'を削除しました';
+
+        // 削除処理
+        $users->delete();
+        // ホーム画面へ
+        return redirect()->route('admin.home')->with('success', $user_message);
+
+    }
 
 
 

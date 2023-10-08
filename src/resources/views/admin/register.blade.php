@@ -17,7 +17,7 @@
             <p class="alert-success">* システム管理者でないため同じ所属会社で固定になります</p>
         @endif
 
-        <form method="POST" action="{{ route('admin.register.add') }}">
+        <form method="POST" action="{{ route('admin.register') }}">
             <!------------------------------------------------->
             <!--CSRFトークン-->
             @csrf
@@ -47,14 +47,15 @@
             @endif
 
             <!--所属会社: システム管理者でない場合は自分の所属会社で固定 -->
-            <label id="place" class='place'>
+            <label>
                 所属会社 *
                 @if (Auth::guard('admin')->user()->system_permission === 1)
+                <!-- システム管理者のみ編集できるようにする -->
                     <select name="place">
                         <!--Model->Controllerで取得した配列を出力-->
-                        @foreach($place as $option_place)
-                            <!-- デフォルトで今ログインしているアカウントと同じ配属先にする(システム管理者はNULLのためデフォルト) -->
-                            @if($option_place === $admin->place)
+                        @foreach($place_list as $option_place)
+                            <!-- デフォルトで今ログインしているアカウントと同じ配属先にする -->
+                            @if($option_place === $admins->place)
                                 <option value='{{ $option_place }}' selected>{{ $option_place }}</option>
                             @else
                                 <option value='{{ $option_place }}'>{{ $option_place }}</option>
@@ -62,7 +63,7 @@
                         @endforeach
                     </select>
                 @else
-                    <input type="text" name="place" value="{{ $admin->place }}" readonly class='disable'>
+                    <input type="text" name="place" value="{{ $admins->place }}" readonly class='disable'>
                 @endif
             </label>
             <!--エラーハンドリング-->
@@ -73,19 +74,24 @@
             @endif
 
             <!--エリア(地方)-->
-            <label id="area" class='area'>
+            <label>
                 エリア *
-                <select name="area">
-                    <!--Model->Controllerで取得した配列を出力-->
-                    @foreach($area as $option_area)
-                        <!-- デフォルトで今ログインしているアカウントと同じエリアにする(システム管理者はNULLのためデフォルト) -->
-                        @if($option_area === $admin->area)
-                            <option value='{{ $option_area }}' selected>{{ $option_area }}</option>
-                        @else
-                            <option value='{{ $option_area }}'>{{ $option_area }}</option>
-                        @endif
-                    @endforeach
-                </select>
+                @if (Auth::guard('admin')->user()->system_permission === 1)
+                <!-- システム管理者のみ編集できるようにする -->
+                    <select name="area">
+                        <!--Model->Controllerで取得した配列を出力-->
+                        @foreach($area_list as $option_area)
+                            <!-- デフォルトで今ログインしているアカウントと同じエリアにする -->
+                            @if($option_area === $admins->area)
+                                <option value='{{ $option_area }}' selected>{{ $option_area }}</option>
+                            @else
+                                <option value='{{ $option_area }}'>{{ $option_area }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                @else
+                    <input type="text" name="area" value="{{ $admins->area }}" readonly class='disable'>
+                @endif
             </label>
             <!--エラーハンドリング-->
             @if ($errors->has('area'))

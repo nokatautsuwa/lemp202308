@@ -15,9 +15,9 @@
 
 // ページ全体デザイン
 // ------------------------------------------
-// スクロールバー
+// スクロールバーは非表示
 ::-webkit-scrollbar {
-  /*display: none;*/
+  display: none;
 }
 // ------------------------------------------
 
@@ -41,6 +41,13 @@ li {
   list-style: none;
 }
 
+label {
+
+  img {
+    cursor: pointer;
+  }
+}
+
 select,
 input[type='checkbox'] {
   cursor: pointer;
@@ -51,6 +58,7 @@ select {
   font-size: 16px;
   letter-spacing: var(--font-space);
   border-radius: 50px;
+  width: 100%;
   padding: 10px 20px;
   margin: 5px 0;
 }
@@ -63,12 +71,6 @@ button[type="submit"] {
   font-size: var(--font-s);
   border-radius: 20px;
   padding: 10px 20px;
-  margin: 0 5px;
-
-  a {
-    color: var(--color-black);
-    font-size: var(--font-s);
-  }
 }
 // ------------------------------------------
 
@@ -141,7 +143,6 @@ body {
             width: 100%;
             color: var(--color-black);
             font-size: var(--font-s);
-            margin: 0;
             padding: 10px 20px;
             overflow: hidden;
             white-space: nowrap;
@@ -163,6 +164,7 @@ body {
 
   // メイン
   main {
+    z-index: 1;
     display: grid;
     place-items: start center;
 
@@ -231,7 +233,6 @@ body {
       select {
         color: var(--color-black);
         background-color: #FFFFFF;
-        width: 100%;
       }
 
       .check {
@@ -248,6 +249,16 @@ body {
       .submit {
         display: flex;
         margin-top: 20px;
+
+        a,
+        button {
+          margin: 0 5px;
+        }
+      }
+
+      .submit-delete {
+        font-weight: bold;
+        background-color: #9a0000;
       }
     }
   }
@@ -268,24 +279,124 @@ footer {
 
 
 
-// 制御
+// モーダル
 // ------------------------------------------
-// 非表示にする
-.hidden {
-  display: none;
+.modal,
+.black,
+.close {
+  position: fixed;
 }
 
-// 表示する
-.active {
-  display: block;
+.modal {
+  z-index: 999;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:100%;
+
+  .window {
+    z-index: 100;
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    height: 90%;
+    max-height: 800px;
+    margin: auto;
+    background-color: var(--color-white);
+    border-radius: 10px;
+
+    .modal-title {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 30px;
+      color: var(--color-white);
+      background-color: var(--color-black);
+      font-size: var(--font-s);
+      border-radius: 10px 10px 0 0;
+    }
+
+    ul {
+      position: absolute;
+      display: grid;
+      place-items: start center;
+      width: 90%;
+      height: calc(100% - 50px - 20px);
+      margin: 0;
+      top: 50px;
+      overflow-y: scroll;
+
+      li {
+        font-size: var(--font-s);
+        margin: 0 0 10px 0;
+
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      li:last-child {
+        display: grid;
+        place-items: end;
+      }
+    }
+  }
+
+  .black {
+    z-index: 1;
+    margin: auto;
+    width: 100%;
+    height:100%;
+    background-color: rgba($color: black, $alpha: 0.5);
+  }
+
+
+} 
+// ------------------------------------------
+
+
+
+// 編集/削除ボタン
+// ------------------------------------------
+#edit,
+#delete {
+  cursor: pointer;
+
+  p {
+    display: block;
+    font-size: var(--font-s);
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: var(--color-white);
+  }
 }
 
-// 無効化する
-.disable {
-  color: var(--color-white-gray);
+#edit {
+
+  p {
+    background-color: var(--color-black);
+  }
 }
 
-// アラート/セッションメッセージ
+#delete {
+
+  p {
+    font-weight: bold;
+    background-color: #9a0000;
+  }
+}
+// ------------------------------------------
+
+
+
+// メッセージ
+// ------------------------------------------
+// アラート/セッション
 .alert-success {
   font-size: var(--font-s);
   font-weight: bold;
@@ -294,9 +405,38 @@ footer {
 
 // エラーメッセージ
 .help-block {
-  color: #cc0000;
+  color: #9a0000;
   font-size: var(--font-s);
   font-weight: bold;
   margin: 5px 0;
+}
+// ------------------------------------------
+
+
+
+// 制御
+// ------------------------------------------
+// 非表示にする
+.hidden {
+  display: none;
+}
+
+// 無効化する
+.disable {
+  color: var(--color-white-gray);
+}
+
+// デフォルトのアップロード機構を非表示にする
+input[type="file"] {
+  display: none;
+}
+
+// マウスホバー
+label {
+
+  img:hover {
+    opacity: 0.8;
+    transition: 0.2s;
+  }
 }
 // ------------------------------------------

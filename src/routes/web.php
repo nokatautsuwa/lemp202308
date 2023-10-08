@@ -68,23 +68,35 @@ Route::middleware('auth:admin')
     // 新規登録
     // * 管理者側はシステム管理者権限または管理者編集権限を持っているアカウントのみ新規登録ができるようにする
     Route::get('register', [AdminRegisterController::class, 'create'])->name('register');
-    Route::post('register', [AdminRegisterController::class, 'store'])->name('register.add');
+    Route::post('register', [AdminRegisterController::class, 'store'])->name('register');
 
     // ホーム画面
     Route::get('home', [AdminHomeController::class, 'index'])->name('home');
 
-    // ユーザー管理画面
-    Route::get('user/{account_id}', [AdminUserController::class, 'profile'])->name('user.profile');
-
-    // プロフィール: bladeから連想配列パラメータ(key: account_idに対応するvalue値(adminsテーブルのid))を受け取る
+    // 管理者/システム管理者ページ: bladeから連想配列パラメータ(key: idに対応するvalue値(adminsテーブルのid))を受け取る
     // -------------------------------
-    // アカウントページ
     Route::get('profile/{id}', [AdminProfileController::class, 'profile'])->name('profile');
-    // 編集
-    Route::put('profile/{id}/edit', [AdminProfileController::class, 'update'])->name('settings');
-    // アカウント削除: bladeから連想配列パラメータ(key: idに対応するvalue値(adminsテーブルのid))を受け取る
-    Route::delete('profile/{id}/destroy', [AdminProfileController::class, 'destroy'])->name('delete');
+    // 管理者のプロフィール更新
+    Route::patch('profile/{id}/edit', [AdminProfileController::class, 'edit'])->name('profile.edit');
+    // キャンセル
+    Route::get('profile/{id}/cancel', [AdminProfileController::class, 'cancel'])->name('profile.cancel');
+    // アカウント論理削除
+    Route::delete('profile/{id}/softdelete', [AdminProfileController::class, 'softDelete'])->name('profile.softdelete');
+    // アカウントレコード削除
+    Route::delete('profile/{id}/destroy', [AdminProfileController::class, 'destroy'])->name('profile.destroy');
     // -------------------------------
+
+    // ユーザー管理ページ: bladeから連想配列パラメータ(key: account_idに対応するvalue値(usersテーブルのaccount_id))を受け取る
+    // -------------------------------
+    Route::get('user/{account_id}', [AdminUserController::class, 'user'])->name('user');
+    // アカウント論理削除
+    Route::delete('user/{account_id}/softdelete', [AdminUserController::class, 'softDelete'])->name('user.softdelete');
+    // アカウントレコード削除
+    Route::delete('user/{account_id}/destroy', [AdminUserController::class, 'destroy'])->name('user.destroy');
+    // キャンセル
+    Route::get('user/{account_id}/cancel', [AdminUserController::class, 'cancel'])->name('user.cancel');
+    // -------------------------------
+
     // 申請
     Route::get('request', [AdminRequestController::class, 'request'])->name('request');
 

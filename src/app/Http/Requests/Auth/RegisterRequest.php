@@ -100,7 +100,6 @@ class RegisterRequest extends FormRequest
         // * passwordは自身で設定させるようにするためここでは追加しない
         $admin = Admin::create([
             'name' => $this->input('name'),
-            'account_id' => $this->input('account_id'),
             'email' => $this->input('email'),
             'place' => $this->input('place'),
             'area' => $this->input('area'),

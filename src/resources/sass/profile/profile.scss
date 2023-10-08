@@ -61,18 +61,14 @@ main {
 
       .request {
         display: flex;
-
-        li {
-          margin: 0 5px;
-
-          p {
-            margin-bottom: 10px;
-          }
-        }
       }
 
       ul {
         margin: 20px 0;
+
+        li {
+          margin: 0 5px;
+        }
       }
     }
 

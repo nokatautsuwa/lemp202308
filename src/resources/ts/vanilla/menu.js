@@ -3,19 +3,20 @@
 const menuButton = document.getElementById('menu');
 const menuList = document.getElementById('menu-list');
 
-// classList: id: menu-listの要素にactiveクラスを追加する(既にある場合は削除する)
+
+
 function menu() {
-  menuList.classList.toggle('active');
+  // 要素のclassListに指定したクラスが含まれているか判定
+  const hasClass = menuList.classList.contains('hidden');
+  if (hasClass) {
+    // class要素にhiddenがある場合はhiddenを削除する
+  menuList.classList.remove('hidden');
+  } else {
+    // ない場合はhiddenを追加する
+    menuList.classList.toggle('hidden');
+  }
 }
 
-// clickするとmenu functionを実行する
+// id='menu'要素をクリックするとmenu functionを実行する
 menuButton.addEventListener('click', menu);
-
-// 要素クリックしたときmenu要素がactive状態の場合に実行する
-document.addEventListener('click', e => {
-  if (!e.target.closest('#menu')) {
-    // classList: activeクラスを削除する
-    menuList.classList.remove('active');
-  }
-});
 // ------------------------------

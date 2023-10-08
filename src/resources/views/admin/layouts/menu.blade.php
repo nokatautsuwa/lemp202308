@@ -1,6 +1,7 @@
 <div id='menu'>
     <img src="{{ asset('storage/images/admin/'.Auth::guard('admin')->user()->image) }}" alt="{{ Auth::guard('admin')->user()->id }}">
 </div>
+
 <ul id='menu-list' class='menu-list hidden'>
     <li>
         <!-- routeの第2引数に連想配列としてパラメータを渡す -->
@@ -10,7 +11,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('admin.settings', ['id' => Auth::guard('admin')->user()->id]) }}">
+        <a href="{{ route('admin.profile', ['id' => Auth::guard('admin')->user()->id]) }}">
             <img src="{{ asset('images/close.svg') }}" alt="settings">
             通知
         </a>

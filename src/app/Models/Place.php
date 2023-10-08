@@ -15,4 +15,10 @@ class Place extends Model
     protected $fillable = [
         'place',
     ];
+
+    // placeの選択肢を作成
+    public static function place()
+    {
+        return Place::distinct()->orderBy('place', 'asc')->pluck('place');
+    }
 }

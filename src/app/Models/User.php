@@ -34,9 +34,12 @@ class User extends Authenticatable
         'follower_count',
         'bio',
         'image',
+        'status',
+        'updated_at',
     ];
     protected $guarded = [
         'created_at',
+        'deleted_at',
     ];
 
     /**
@@ -62,6 +65,8 @@ class User extends Authenticatable
     // 日付のフォーマットを変えるformat関数を使えるようにする
     protected $dates = [
         'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     // UserモデルからProfileモデルに関連付けられたデータを取得(1:1)
