@@ -81,6 +81,38 @@ class AdminUserController extends Controller
 
 
 
+    // ユーザー情報の変更
+    public function edit(Request $request, User $users, String $account_id): RedirectResponse 
+    {
+        // パスワードが一致しない場合は中止
+        // -------------------------------------
+        if (!Hash::check($request->input('password'), Auth::guard('admin')->user()->password)) {
+            if ($request->input('password') === null) {
+                return redirect()->back()->withInput()->with('success', '* 更新にはログインパスワードが必要です');
+            } else {
+                return redirect()->back()->withInput()->with('success', '* パスワードが違います');
+            }
+        }
+        // -------------------------------------
+
+        // 該当ユーザーのレコードを取得する
+        $users = $users->eachUserAccountId($account_id);
+
+        // 復旧のチェックにチェックが入っている場合のみ実行する
+        if ($request->input('recover') !== null) {
+            $users->deleted_at = null;
+            $users->update();
+            $users->save();
+            $user_message = '* ' . $users->name . 'を復旧しました';
+        } else {
+            $user_message = '* 復旧にチェックを入れてください';
+        }
+        // リダイレクト
+        return redirect()->back()->with('success', $user_message);
+    }
+
+
+
     // アカウント論理削除
     public function softDelete(Request $request, User $users, String $account_id): RedirectResponse 
     {
@@ -94,6 +126,7 @@ class AdminUserController extends Controller
             }
         }
         // -------------------------------------
+
         // 該当ユーザーのレコードを取得する
         $users = $users->eachUserAccountId($account_id);
 
@@ -106,7 +139,7 @@ class AdminUserController extends Controller
         $users->save();
 
         // ホーム画面へ
-        return redirect()->route('admin.home')->with('success', $user_message);
+        return redirect()->back()->with('success', $user_message);
 
     }
 

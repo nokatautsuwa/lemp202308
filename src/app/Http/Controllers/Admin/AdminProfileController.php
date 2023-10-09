@@ -104,7 +104,7 @@ class AdminProfileController extends Controller
 
 
 
-    // 各管理者のプロフィール変更
+    // 各管理者情報の変更
     public function edit(Request $request, Admin $admins, Int $id): RedirectResponse 
     {
         // パスワードが一致しない場合は中止
@@ -118,19 +118,61 @@ class AdminProfileController extends Controller
         }
         // -------------------------------------
 
-
         // 該当ユーザーのレコードを取得する
         $admins = $admins->idAdmin($id);
 
+        // 論理削除されているアカウントに対してはこちら
+        // -------------------------------------
+        if($admins->deleted_at !== null) {
 
-        // アイコン画像のアップロード
-        // 事前にシンボリックリンクを作成する
+            // 復旧にチェックが入っている場合はdeleted_atをNULLにする
+            if ($request->input('recover') !== null) {
+                $admins->deleted_at = null;
+                $admins->update();
+                $admins->save();
+                $admin_message = '* 管理者レコードNo.' . $id . ': ' . $admins->name . 'を復旧しました';
+            } else {
+                $admin_message = '* 復旧にチェックを入れてください';
+            }
+            // リダイレクト
+            return redirect()->back()->with('success', $admin_message);
+        }
+        // -------------------------------------
+        
+        // 特定のレコードに対して操作を行う場合はモデルインスタンスを取得して操作することが一般的
+
+        // バリデーション: メールアドレスが空欄かどうかで$validatorの条件を分ける
+        // -------------------------------------
+        if ($request->input('email') !== null) {
+            // 自分のレコードのみuniqueから削除
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|unique:admins,name,' . $id,
+                'email' => 'email|unique:admins,email,' . $id,
+            ]);
+        } else {
+            // 自分のレコードのみuniqueから削除
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|unique:admins,name,' . $id,
+            ]);
+        }
+        // バリデーションエラー処理
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('success', '* 無効な入力値があったため中止しました');
+        }
+        // -------------------------------------
+        
+        // メールアドレス: 空欄でない場合のみ更新する
+        // -------------------------------------
+        if ($request->input('email') !== null) {
+            $admins->email = $request->input('email');
+        }
+        // -------------------------------------
+
+        // アイコン画像のアップロード: 事前にシンボリックリンクを作成する
         // -------------------------------------
         if ($request->hasFile('images')) {
 
-            // アップロードされている場合
-
-            // ファイル名を指定して作成
+            // アップロードされている場合: ファイル名を指定して作成
             $file_name = '/icon_' . $admins->id  . '.webp';
 
             // ディレクトリを取得
@@ -150,64 +192,22 @@ class AdminProfileController extends Controller
             $request->images->storeAs($directory, $file_name);
 
             // adminsテーブルimageカラムに格納するパスを作成
-            // '/storage/images/admin/'までは共通でbladeに記述しているので以降のパスを$file_path変数に格納
             // 最終的なパスはid: 1のアカウントの場合'storage/admin/1/icon_1.webp'となる
-            $file_path = $admins->id . '/icon_' . $admins->id  . '.webp';
-
-        } else {
-
-            // imageにデータがない(アップロードされていない)場合
-
-            // adminsテーブルimageカラムの値をそのまま取得
-            $file_path = $admins->image;
+            $admins->image = $admins->id . '/icon_' . $admins->id  . '.webp';
 
         }
         // -------------------------------------
-        
 
-        // バリデーション(* Requestでは$idをrules()メソッドに渡す方法が難しい)
-        // メールアドレス欄が空欄かどうかで$validatorの条件を分ける
+        // その他項目
         // -------------------------------------
-        if ($request->input('email') === null) {
-
-            // 自分のレコードのみuniqueから削除
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|unique:admins,name,' . $id,
-            ]);
-            // バリデーションエラー処理
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput()->with('success', '* 無効な入力値があったため中止しました');
-            }
-
-            // 更新処理: emailカラムの更新はなし
-            // 特定のレコードに対して操作を行う場合はモデルインスタンスを取得して操作することが一般的
-            $admins->name = $request->input('name');
-            $admins->place = $request->input('place');
-            $admins->area = $request->input('area');
-            $admins->image = $file_path;
-
-        } else {
-
-            // 自分のレコードのみuniqueから削除
-            $validator = Validator::make($request->all(), [
-                'name' => 'required|string|unique:admins,name,' . $id,
-                'email' => 'email|unique:admins,email,' . $id,
-            ]);
-            // バリデーションエラー処理
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput()->with('success', '* 無効な入力値があったため中止しました');
-            }
-
-            // 更新処理
-            // 特定のレコードに対して操作を行う場合はモデルインスタンスを取得して操作することが一般的
-            $admins->name = $request->input('name');
-            $admins->email = $request->input('email');
-            $admins->place = $request->input('place');
-            $admins->area = $request->input('area');
-            $admins->image = $file_path;
-
-        }
+        $admins->name = $request->input('name');
+        $admins->place = $request->input('place');
+        $admins->area = $request->input('area');
+        $admins->user_permission = $request->input('user-permission') ?? 0;
+        $admins->admin_permission = $request->input('admin-permission') ?? 0;
         // -------------------------------------
+
+        // 更新/保存
         $admins->update();
         $admins->save();
 
@@ -244,7 +244,7 @@ class AdminProfileController extends Controller
 
         // どのアカウントが削除されたかを取得するための情報を設定する
         $admin_name = $admins->name;
-        $admin_message = '* 管理者レコードNo.' . $id . ': ' . $admin_name . 'を削除しました';
+        $admin_message = '* 管理者レコードNo.' . $id . ': ' . $admin_name . 'を論理削除しました';
 
         // 該当ユーザーのdeleted_atに現在時刻を入れて保存
         // save()でupdated_atが現在時刻に更新される
@@ -267,7 +267,7 @@ class AdminProfileController extends Controller
         } else {
 
             // ホーム画面へ
-            return redirect()->route('admin.home')->with('success', $admin_message);
+            return redirect()->back()->with('success', $admin_message);
 
         }
 

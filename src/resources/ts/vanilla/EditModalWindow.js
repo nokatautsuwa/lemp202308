@@ -22,3 +22,6 @@ editButton.addEventListener('click', editModalOpen);
 // closeWindow要素をクリックするとclose functionを実行する
 editCloseButton.addEventListener('click', editModalClose);
 // ------------------------------------
+
+
+

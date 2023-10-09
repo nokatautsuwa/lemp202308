@@ -89,6 +89,8 @@ Route::middleware('auth:admin')
     // ユーザー管理ページ: bladeから連想配列パラメータ(key: account_idに対応するvalue値(usersテーブルのaccount_id))を受け取る
     // -------------------------------
     Route::get('user/{account_id}', [AdminUserController::class, 'user'])->name('user');
+    // ユーザー情報更新
+    Route::patch('user/{account_id}/edit', [AdminUserController::class, 'edit'])->name('user.edit');
     // アカウント論理削除
     Route::delete('user/{account_id}/softdelete', [AdminUserController::class, 'softDelete'])->name('user.softdelete');
     // アカウントレコード削除
