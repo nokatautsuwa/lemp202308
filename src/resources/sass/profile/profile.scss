@@ -61,13 +61,14 @@ main {
 
       .request {
         display: flex;
+        flex-wrap: wrap;
       }
 
       ul {
         margin: 20px 0;
 
         li {
-          margin: 0 5px;
+          margin: 5px;
         }
       }
     }

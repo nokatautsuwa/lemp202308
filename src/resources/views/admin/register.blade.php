@@ -1,7 +1,7 @@
 @extends('admin.app')
 
 @section('component')
-    @vite(['resources/sass/auth/auth.scss', 'resources/ts/vanilla/permission.js'])
+    @vite(['resources/sass/auth/auth.scss', 'resources/ts/vanilla/AdminPermission.js'])
 @endsection
 
 @section('title', '新規登録')

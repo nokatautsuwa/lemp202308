@@ -8,12 +8,17 @@
 
     <!-- 削除機能 -->
     <!---------------------------------------------------------->
-    @if (Auth::guard('admin')->user()->admin_permission === 1)
-    <!-- 自分が管理者編集権限を持っている -->
+    @if (Auth::guard('admin')->user()->user_permission === 1)
+    <!-- 自分がユーザー編集権限を持っている -->
 
         @if ($admins->contains('id', Auth::guard('admin')->user()->id))
         <!-- 担当者に自分が入っている場合に編集可 -->
             @vite(['resources/ts/vanilla/DeleteModalWindow.js'])
+
+            @if($users->deleted_at !== null)
+            <!-- 論理削除されている -->
+                @vite(['resources/ts/vanilla/EditModalWindow.js'])
+            @endif
         @endif
 
     @endif
@@ -70,16 +75,25 @@
 
         <!-- 削除機能 -->
        <!---------------------------------------------------------->
-        @if (Auth::guard('admin')->user()->admin_permission === 1)
-        <!-- 自分が管理者編集権限を持っている -->
+        @if (Auth::guard('admin')->user()->user_permission === 1)
+        <!-- 自分がユーザー編集権限を持っている -->
 
             @if ($admins->contains('id', Auth::guard('admin')->user()->id))
             <!-- 担当者に自分が入っている場合に編集可 -->
 
                 <ul class="request">
 
+                    @if($users->deleted_at !== null)
+                    <!-- 論理削除されている -->
+                        <li id='edit'>
+                            <p>復旧</p>
+                        </li>
+                        <!-- 復旧モーダルウィンドウ -->
+                        @include('admin.layouts.user_edit_modal')
+                    @endif
+
                     <li id='delete'>
-                        <p>管理者削除</p>
+                        <p>削除</p>
                     </li>
                     <!-- 削除モーダルウィンドウ -->
                     @include('admin.layouts.user_delete_modal')

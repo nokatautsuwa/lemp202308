@@ -1,7 +1,7 @@
 @extends('admin.app')
 
 @section('component')
-    @vite(['resources/sass/profile/profile.scss', 'resources/ts/vanilla/beforeunload.js'])
+    @vite(['resources/sass/profile/profile.scss', 'resources/ts/vanilla/PageBeforeunload.js'])
 @endsection
 
 @section('title')

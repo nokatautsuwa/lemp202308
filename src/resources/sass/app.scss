@@ -53,6 +53,10 @@ input[type='checkbox'] {
   cursor: pointer;
 }
 
+input[type='checkbox'] {
+  vertical-align: middle;
+}
+
 input,
 select {
   font-size: 16px;
@@ -248,11 +252,13 @@ body {
 
       .submit {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
         margin-top: 20px;
 
         a,
         button {
-          margin: 0 5px;
+          margin: 5px;
         }
       }
 

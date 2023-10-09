@@ -18,9 +18,11 @@
         @if(Auth::guard('admin')->user()->system_permission === 1)
         <!-- 自分がシステム管理者 -->
 
-            @if($admins->system_permission !== 1)
-            <!-- システム管理者でない&論理削除されていない全管理者 -->
-                @vite(['resources/ts/vanilla/EditModalWindow.js', 'resources/ts/vanilla/ImagePreview.js'])
+            @vite(['resources/ts/vanilla/EditModalWindow.js'])
+
+            @if($admins->deleted_at === null)
+            <!-- 論理削除されていない -->
+                @vite(['resources/ts/vanilla/ImagePreview.js'])
             @endif
 
         @else
@@ -30,8 +32,14 @@
             <!-- 自分が管理者編集権限を持っている -->
 
                 @if($admins->system_permission !== 1 && $admins->place === Auth::guard('admin')->user()->place && $admins->deleted_at === null)
-                <!-- システム管理者でない&自分と同じ所属会社&論理削除されていない管理者に対して可 -->
-                    @vite(['resources/ts/vanilla/EditModalWindow.js', 'resources/ts/vanilla/ImagePreview.js'])
+                <!-- システム管理者でない&自分と同じ所属会社の管理者 -->
+                    @vite(['resources/ts/vanilla/EditModalWindow.js'])
+                    
+                    @if($admins->deleted_at === null)
+                    <!-- 論理削除されていない -->
+                        @vite(['resources/ts/vanilla/ImagePreview.js'])
+                    @endif
+
                 @endif
 
             @endif
@@ -183,16 +191,11 @@
                 @if(Auth::guard('admin')->user()->system_permission === 1)
                 <!-- 自分がシステム管理者 -->
 
-                    @if($admins->system_permission !== 1)
-                    <!-- システム管理者でない全管理者に対して編集可 -->
-
-                        <li id='edit'>
-                            <p>編集</p>
-                        </li>
-                        <!-- 編集モーダルウィンドウ -->
-                        @include('admin.layouts.admin_edit_modal')
-                        
-                    @endif
+                    <li id='edit'>
+                        <p>編集</p>
+                    </li>
+                    <!-- 編集モーダルウィンドウ -->
+                    @include('admin.layouts.admin_edit_modal')
 
                 @else
                 <!-- 自分がシステム管理者でない -->

@@ -20,7 +20,7 @@
         @vite(['resources/sass/app.scss'])
         @if (Auth::guard('admin')->check())
         <!-- adminでログインしている場合のみ共通で入れる -->
-            @vite(['resources/ts/vanilla/menu.js'])
+            @vite(['resources/ts/vanilla/AdminMenu.js'])
         @endif
         @vite(['resources/sass/app.scss'])
         <!-- 各ページに合わせたコンポーネントを追加で取得する -->
