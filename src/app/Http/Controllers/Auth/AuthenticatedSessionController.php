@@ -64,13 +64,15 @@ class AuthenticatedSessionController extends Controller
             $admins = $admins->where('name', $request->input('account'))->first();
         }
 
-        // ログインしようとしているアカウントにパスワードが設定されていない場合はパスワード登録画面にリダイレクトさせる
-        if($admins->password === null) {
+        // アカウントの確認
+        if(!$admins) {
+            // ログインしようとしているアカウントが存在しない場合は戻す
+            return redirect()->back()->withInput()->with('success', '* このアカウントは存在しません');
+        } elseif($admins->password === null) {
+            // ログインしようとしているアカウントにパスワードが設定されていない場合はパスワード登録画面にリダイレクトさせる
             return redirect()->route('admin.password')->with('success', '* パスワードが登録されていません。登録をお願いいたします。');
-        }
-
-        // ログインしようとしているアカウントが論理削除状態の場合は戻す
-        if ($admins->deleted_at !== null) {
+        } elseif ($admins->deleted_at !== null) {
+            // ログインしようとしているアカウントが論理削除状態の場合は戻す
             return redirect()->back()->withInput()->with('success', '* このアカウントは削除されています');
         }
         // ------------------------------------
