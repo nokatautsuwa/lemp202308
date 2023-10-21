@@ -7,8 +7,8 @@ export default defineConfig({
     resolve: {
         alias: {
             // 各コンポーネントの'@'が参照するルートディレクトリを変更する
-            // pathモジュールをインポートして'現在のワーキングディレクトリ/resources/ts'に変える
-            '@': path.resolve(process.cwd(), 'resources/ts'),
+            // pathモジュールをインポートして'現在のワーキングディレクトリを設定
+            '@': path.resolve(process.cwd(), 'resources/ts/'),
         },
     },
     plugins: [
@@ -16,6 +16,7 @@ export default defineConfig({
             input: [
                 // "resources/js/app.jsx",
                 "resources/ts/app.jsx",
+                "resources/ts/app.tsx",
                 "resources/sass/app.scss",
                 "resources/sass/auth/auth.scss",
                 "resources/sass/profile/profile.scss",

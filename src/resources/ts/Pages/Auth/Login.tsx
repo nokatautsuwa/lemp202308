@@ -1,13 +1,24 @@
+import React from 'react'; // TypeScriptに変えた場合必要
+
+// 'types/*'の型定義ファイルで宣言している
+
 import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import LinkButton from '@/Components/LinkButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Login({ status, canResetPassword }) {
+// Loginコンポーネントのプロパティ型
+interface LoginProps {
+    status: string;
+    canResetPassword: string;
+}
+
+export default function Login({ status, canResetPassword } : LoginProps) {
 
     // data, setData: useState
     // post: post() 関数でフォームデータをPOSTする(get/put/delete/patchも用意されている)
@@ -30,7 +41,8 @@ export default function Login({ status, canResetPassword }) {
     }, []);
 
     // リクエストを送信したときに実行
-    const submit = (e) => {
+    const submit = (e: React.FormEvent<HTMLFormElement>) => {
+        // デフォルトの遷移動作(新しいページへの移動)をキャンセル
         e.preventDefault();
         // POSTリクエストで'/login'へアクセス
         post(route('login'));
@@ -43,76 +55,90 @@ export default function Login({ status, canResetPassword }) {
             <Head title="ログイン" />
 
             {/* 処理を行ってリダイレクトされたときにstatusキーに入った値を表示する */}
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && <div className="mb-4 font-medium text-sm">{status}</div>}
 
             <form onSubmit={submit}>
 
                 {/* アカウントID or メールアドレス */}
                 <div>
                     <InputLabel htmlFor="account" value="アカウントIDまたはメールアドレス" />
-
+                    {/* 入力欄の値が変化した時にsetDataのaccountに現在の値を格納する */}
                     <TextInput
+                        isFocused={true}
                         id="account"
+                        type="text"
                         name="account"
                         value={data.account}
-                        className="mt-1 block w-full"
                         autoComplete="account"
-                        isFocused={true}
-                        onChange={(e) => setData('account', e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('account', e.target.value)}
                     />
+                    {/* エラーメッセージ */}
                     <InputError message={errors.account} className="mt-2" />
                 </div>
 
                 {/* パスワード */}
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="パスワード" />
-
+                    {/* 入力欄の値が変化した時にsetDataのpasswordに現在の値を格納する */}
                     <TextInput
                         id="password"
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
                         autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('password', e.target.value)}
                     />
+                    {/* エラーメッセージ */}
                     <InputError message={errors.password} className="mt-2" />
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            パスワードを忘れた方はこちら
-                        </Link>
-                    )}
                 </div>
 
                 {/* ユーザー情報を保存 */}
-                <div className="block mt-4">
+                <div className="mt-4">
                     <label className="flex items-center">
+                        {/* 入力欄の値が変化した時にsetDataのrememberに現在のチェック状態を格納する */}
                         <Checkbox
                             name="remember"
+                            type="checkbox"
                             checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('remember', e.target.checked)}
                         />
-                        <span className="ml-2 text-sm text-gray-600">ユーザー情報を保存する</span>
+                        <span
+                            className="ml-2 text-sm text-white-900"
+                        >
+                            ユーザー情報を保存する
+                        </span>
                     </label>
                 </div>
 
                 {/* 登録 */}
-                <div className="flex items-center justify-end mt-4">   
-                    <Link
-                        href={route('register')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <div className="flex items-center justify-center mt-8">
+                    <PrimaryButton
+                        disabled={processing}
                     >
-                        未登録の方はこちら
-                    </Link>
-                    <PrimaryButton className="ml-4" disabled={processing}>
                         ログイン
                     </PrimaryButton>
                 </div>
 
             </form>
+
+            <div className="flex items-center justify-center mt-4">
+                {canResetPassword && (
+                    <Link
+                        href={route('password.request')}
+                        className="underline text-sm text-white-900"
+                    >
+                        パスワードを忘れた方はこちら
+                    </Link>
+                )}
+            </div>
+
+            <div className="flex items-center justify-center mt-8">
+                <LinkButton
+                    url={route('register')}
+                    text='新規登録'
+                />
+            </div>
+
         </GuestLayout>
     );
 }
