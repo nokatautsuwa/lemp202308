@@ -13,7 +13,8 @@
         <!-- Scripts -->
         @routes
         @viteReactRefresh
-        @vite(['resources/ts/app.jsx', "resources/ts/Pages/{$page['component']}.jsx"])
+        <!-- TypeScriptファイルに変える -->
+        @vite(['resources/ts/app.tsx', "resources/ts/Pages/{$page['component']}.tsx"])
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
