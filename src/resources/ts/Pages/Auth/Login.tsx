@@ -1,7 +1,5 @@
 import React from 'react'; // TypeScriptに変えた場合必要
 
-// 'types/*'の型定義ファイルで宣言している
-
 import { useEffect } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
@@ -103,7 +101,7 @@ export default function Login({ status, canResetPassword } : LoginProps) {
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('remember', e.target.checked)}
                         />
                         <span
-                            className="ml-2 text-sm text-white-900"
+                            className="ml-2 text-sm text-white"
                         >
                             ユーザー情報を保存する
                         </span>
@@ -125,7 +123,7 @@ export default function Login({ status, canResetPassword } : LoginProps) {
                 {canResetPassword && (
                     <Link
                         href={route('password.request')}
-                        className="underline text-sm text-white-900"
+                        className="underline text-sm text-white"
                     >
                         パスワードを忘れた方はこちら
                     </Link>
