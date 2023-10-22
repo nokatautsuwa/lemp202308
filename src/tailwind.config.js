@@ -27,20 +27,14 @@ export default {
 
             // カラーパレット
             colors: {
+                black: '#111111',
+                white: '#EEEEEE',
                 navy: {
                     50: '#EFF6FF',
                     100: '#D5DFF0',
                     200: '#B4C8EA',
                 },
                 yellow: '#EAAC2F',
-                black: {
-                    100: '#999999',
-                    900: '#111111',
-                },
-                white: {
-                    100: '#CCCCCC',
-                    900: '#EEEEEE',
-                }
             },
 
         },

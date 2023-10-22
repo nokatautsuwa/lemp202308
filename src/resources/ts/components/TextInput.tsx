@@ -38,7 +38,7 @@ export default function TextInput(
     return (
         <input
             {...props}
-            className='rounded-full px-2.5 mt-1 block text-base w-full'
+            className='rounded-full px-2.5 mt-1 block text-base text-black bg-white w-full'
             {...input}
         />
     );

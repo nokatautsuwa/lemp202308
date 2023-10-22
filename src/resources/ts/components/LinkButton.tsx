@@ -12,7 +12,7 @@ export default function LinkButton({ url, text } : LinkButtonProps) {
     return (
         <Link
             href={url}
-            className="text-sm text-black-900 bg-white-900 py-2.5 px-7 rounded-full"
+            className="text-sm text-black bg-white py-2.5 px-7 rounded-full"
         >
             {text}
         </Link>

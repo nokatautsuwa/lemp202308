@@ -1,5 +1,11 @@
-// 変数message
-export default function InputError({ message }) {
+import React from 'react'; // TypeScriptに変えた場合必要
+
+// InputErrorコンポーネントのプロパティ型
+interface InputErrorProps {
+    message: string;
+}
+
+export default function InputError({ message } : InputErrorProps) {
 
     // 三項演算子: messageの中身が存在する場合
     return message ? (

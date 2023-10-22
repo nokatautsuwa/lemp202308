@@ -1,11 +1,17 @@
 import React from 'react'; // TypeScriptに変えた場合必要
+
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
 
-export default function Guest({ children }) {
+// Loginコンポーネントのプロパティ型
+interface GuestLayoutProps {
+    children: string;
+}
+
+export default function Guest({ children } : GuestLayoutProps) {
     return (
         <main
-            className="min-h-screen flex flex-col justify-center items-center bg-black-900"
+            className="min-h-screen flex flex-col justify-center items-center bg-black"
 		>
 			{/* ロゴ */}
             <div>

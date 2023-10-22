@@ -19,6 +19,24 @@ declare module '@/Components/Checkbox' {
 }
 
 
+// DangerButton
+declare module '@/Components/DangerButton' {
+	import React from 'react';
+	// コンポーネントの型
+	const DangerButton: React.FC<DangerButtonProps>;
+	export default DangerButton;
+}
+
+
+// DropDown
+declare module '@/Components/DropDown' {
+	import React from 'react';
+	// コンポーネントの型
+	const DropDown: React.FC<DropDownProps>;
+	export default DropDown;
+}
+
+
 // InputError
 declare module '@/Components/InputError' {
 	import React from 'react';
