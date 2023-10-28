@@ -1,16 +1,16 @@
-import React from 'react'; // TypeScriptに変えた場合必要
+import React from 'react';
+import { Link } from '@inertiajs/react';
 
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import { Link } from '@inertiajs/react';
 
 // Loginコンポーネントのプロパティ型
 interface GuestLayoutProps {
     children: string;
-}
+};
 
 export default function Guest({ children } : GuestLayoutProps) {
     return (
-        <main
+        <div
             className="min-h-screen flex flex-col justify-center items-center bg-black"
 		>
 			{/* ロゴ */}
@@ -28,6 +28,6 @@ export default function Guest({ children } : GuestLayoutProps) {
 				{/* 子コンポーネントで<GuestLayout>でラップされている要素を取得する */}
                 {children}
             </div>
-        </main>
+        </div>
     );
-}
+};

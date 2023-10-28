@@ -2,22 +2,21 @@ import React from 'react';
 import { Link } from '@inertiajs/react';
 
 // LinkButtonコンポーネントのプロパティ型
-interface NavLinkProps {
+interface DrawerLinkProps {
     url: string;
     file: string
     text: string;
 };
 
 // 子コンポーネントで定義された値を当てはめる
-export default function NavLink(props : NavLinkProps) {
+export default function DrawerLink( props : DrawerLinkProps ) {
     return (
         <Link
             href={props.url}
-            className='w-1/5 h-14 pt-2'
+            className='flex w-full h-full hover:bg-gray-600 py-4 px-10'
         >
-            <li>
-                <img src={`/images/${props.file}`} className="h-5 w-auto mx-auto" alt={`${props.text}`} />
-            </li>
+            <img src={`/images/${props.file}`} className="h-5 w-auto mr-2.5 my-auto" alt={`${props.text}`} />
+            <p>{props.text}</p>
         </Link>
     );
 };

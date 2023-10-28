@@ -1,3 +1,10 @@
+declare module '@/Layouts/PageLayout' {
+  import React from 'react';
+  // コンポーネントの型
+  const PageLayout: React.FC<PageLayoutProps>;
+  export default PageLayout;
+}
+
 
 declare module '@/Layouts/GuestLayout' {
   import React from 'react';

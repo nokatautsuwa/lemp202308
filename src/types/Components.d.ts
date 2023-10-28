@@ -1,3 +1,12 @@
+// Account
+declare module '@/Components/Account' {
+	import React from 'react';
+	// コンポーネントの型
+	const Account: React.FC<AccountProps>;
+	export default Account;
+}
+
+
 // ApplicationLogo
 declare module '@/Components/ApplicationLogo' {
 	import React from 'react';
@@ -28,12 +37,30 @@ declare module '@/Components/DangerButton' {
 }
 
 
+// DrawerLink
+declare module '@/Components/DrawerLink' {
+	import React from 'react';
+	// コンポーネントの型
+	const DrawerLink: React.FC<DrawerLinkProps>;
+	export default DrawerLink;
+}
+
+
 // DropDown
 declare module '@/Components/DropDown' {
 	import React from 'react';
 	// コンポーネントの型
 	const DropDown: React.FC<DropDownProps>;
 	export default DropDown;
+}
+
+
+// FollowLink
+declare module '@/Components/FollowLink' {
+	import React from 'react';
+	// コンポーネントの型
+	const FollowLink: React.FC<FollowLinkProps>;
+	export default FollowLink;
 }
 
 
@@ -61,6 +88,24 @@ declare module '@/Components/LinkButton' {
 	// コンポーネントの型
 	const LinkButton: React.FC<LinkButtonProps>;
 	export default LinkButton;
+}
+
+
+// NavLink
+declare module '@/Components/NavLink' {
+	import React from 'react';
+	// コンポーネントの型
+	const NavLink: React.FC<NavLinkProps>;
+	export default NavLink;
+}
+
+
+// TimeLine
+declare module '@/Components/TimeLine' {
+	import React from 'react';
+	// コンポーネントの型
+	const TimeLine: React.FC<TimeLineProps>;
+	export default TimeLine;
 }
 
 
