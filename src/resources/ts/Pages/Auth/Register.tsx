@@ -1,15 +1,16 @@
-import React from 'react'; // TypeScriptに変えた場合必要
-
+import React from 'react';
 import { useEffect } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
+
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
 
 // Login.tsxと同じ構成のため省略
 export default function Register() {
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         account_id: '',
@@ -112,9 +113,8 @@ export default function Register() {
                 <div className="flex items-center justify-center mt-8">
                     <PrimaryButton
                         disabled={processing}
-                    >
-                        登録
-                    </PrimaryButton>
+                        text='登録'
+                    />
                 </div>
 
             </form>
@@ -130,4 +130,4 @@ export default function Register() {
 
         </GuestLayout>
     );
-}
+};

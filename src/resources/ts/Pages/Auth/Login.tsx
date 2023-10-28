@@ -1,6 +1,7 @@
-import React from 'react'; // TypeScriptに変えた場合必要
-
+import React from 'react';
 import { useEffect } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
+
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -8,13 +9,12 @@ import InputLabel from '@/Components/InputLabel';
 import LinkButton from '@/Components/LinkButton';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
 
 // Loginコンポーネントのプロパティ型
 interface LoginProps {
     status: string;
     canResetPassword: string;
-}
+};
 
 export default function Login({ status, canResetPassword } : LoginProps) {
 
@@ -112,9 +112,8 @@ export default function Login({ status, canResetPassword } : LoginProps) {
                 <div className="flex items-center justify-center mt-8">
                     <PrimaryButton
                         disabled={processing}
-                    >
-                        ログイン
-                    </PrimaryButton>
+                        text='ログイン'
+                    />
                 </div>
 
             </form>
@@ -139,4 +138,4 @@ export default function Login({ status, canResetPassword } : LoginProps) {
 
         </GuestLayout>
     );
-}
+};

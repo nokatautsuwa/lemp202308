@@ -1,16 +1,16 @@
-import React from 'react'; // TypeScriptに変えた場合必要
+import React from 'react';
 
 // InputLabelコンポーネントのプロパティ型
 interface InputLabelProps {
     value: string;
 }
 
-export default function InputLabel({ value } : InputLabelProps) {
+export default function InputLabel(props : InputLabelProps) {
     return (
         <label
             className='block font-medium text-sm text-white mb-1.5'
         >
-            {value}
+            {props.value}
         </label>
     );
-}
+};

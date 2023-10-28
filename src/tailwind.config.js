@@ -21,21 +21,27 @@ export default {
             // lg: min-width:1024px; (1024px以上の時に適用)
             // xl: min-width:1280px; (1280px以上の時に適用)
 
-            fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            // フォントサイズ
+            fontSize: {
+                size90: '90%',
             },
 
             // カラーパレット
             colors: {
                 black: '#111111',
                 white: '#EEEEEE',
-                navy: {
-                    50: '#EFF6FF',
-                    100: '#D5DFF0',
-                    200: '#B4C8EA',
-                },
-                yellow: '#EAAC2F',
+                translucent: 'rgba(31,41,55,0.8)',
             },
+
+            // 画面幅
+            width: {
+                content_lg: 'calc(100% - 18rem)',
+                id: '10rem',
+                // 2rem: アイコン幅
+                // 1rem: ml-2 + mr-2
+                // 0.5rem: 右側の余白
+                post: 'calc(100% - 2rem - 1rem - 0.5rem)',
+            }
 
         },
     },

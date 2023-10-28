@@ -1,4 +1,4 @@
-import React from 'react'; // TypeScriptに変えた場合必要
+import React from 'react';
 
 export default function Checkbox({ ...props }) {
     return (
@@ -7,4 +7,4 @@ export default function Checkbox({ ...props }) {
             className='rounded border-gray-300 text-gray-600'
         />
     );
-}
+};

@@ -1,4 +1,4 @@
-import React from 'react'; // TypeScriptに変えた場合必要
+import React from 'react';
 import { forwardRef, useEffect, useRef } from 'react';
 
 // イベントオブジェクトの型を指定/onChange イベントハンドラの型を宣言
@@ -13,7 +13,7 @@ interface TextInputProps {
     value: string;
     autoComplete: string;
     onChange: OnChangeHandler;
-}
+};
 
 export default function TextInput(
     {
@@ -43,4 +43,4 @@ export default function TextInput(
         />
     );
 
-}
+};

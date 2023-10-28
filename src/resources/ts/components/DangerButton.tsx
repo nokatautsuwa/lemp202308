@@ -1,10 +1,10 @@
-import React from 'react'; // TypeScriptに変えた場合必要
+import React from 'react';
 
 // DangerButtonコンポーネントのプロパティ型
 interface DangerButtonProps {
     disabled: boolean;
     children: string;
-}
+};
 
 export default function DangerButton({disabled, children, ...props } : DangerButtonProps) {
     return (
